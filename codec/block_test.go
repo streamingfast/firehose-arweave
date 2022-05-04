@@ -4,6 +4,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"testing"
+	"time"
 
 	pbcodec "github.com/ChainSafe/firehose-arweave/pb/sf/arweave/type/v1"
 	"github.com/streamingfast/bstream"
@@ -24,7 +25,7 @@ func TestDecode(t *testing.T) {
 		Id:             hex.EncodeToString(b.Hash),
 		Number:         b.Height,
 		PreviousId:     hex.EncodeToString(b.PreviousBlock),
-		Timestamp:      b.Timestamp.AsTime(),
+		Timestamp:      time.UnixMilli(int64(b.Timestamp)),
 		LibNum:         b.Height - 1,
 		PayloadKind:    pbbstream.Protocol_UNKNOWN,
 		PayloadVersion: 1,

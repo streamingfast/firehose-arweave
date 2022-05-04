@@ -1,33 +1,29 @@
 # syntax=docker/dockerfile:1.2
-#
-# firearweave builder
-FROM golang:buster as firearweave-builder
-COPY . firehose-arweave
-RUN --mount=type=cache,target=/var/cache/apk \
-    --mount=type=cache,target=/go/pkg \
-    cd firehose-arweave \
-    && rm -rf .git \
-    && git init \
-    && go install -v -ldflags "-X main.Version=$version" \
-    ./cmd/firearweave
 
+# TODO: Move that to `thegarii` repo so we can pull it?
 # thegarii builder
-FROM rust:buster as thegarii-builder
+FROM rust:bullseye as thegarii-builder
 ENV CARGO_NET_GIT_FETCH_WITH_CLI=true
 RUN --mount=type=cache,target=/var/cache/apk \
     --mount=type=cache,target=/home/rust/.cargo \
     rustup component add rustfmt \
     && cargo install thegarii
 
-# firearweave
-FROM debian:stable-slim as firearweave-release
-COPY --from=firearweave-builder /go/bin/firearweave /usr/bin/firearweave
-COPY --from=thegarii-builder /usr/local/cargo/bin/thegarii /usr/bin/thegarii
-COPY ./devel/standard/standard.yaml config.yaml
-RUN apt-get update \
-    && apt-get install ca-certificates -y \
-    && apt-get autoremove -y \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+FROM ubuntu:20.04
 
-ENTRYPOINT ["firearweave", "-c", "config.yaml", "start"]
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
+    apt-get -y install -y \
+    ca-certificates libssl1.1 vim htop iotop sysstat \
+    dstat strace lsof curl jq tzdata && \
+    rm -rf /var/cache/apt /var/lib/apt/lists/*
+
+RUN rm /etc/localtime && ln -snf /usr/share/zoneinfo/America/Montreal /etc/localtime && dpkg-reconfigure -f noninteractive tzdata
+
+ADD /firearweave /app/sfeth
+COPY --from=thegarii-builder /usr/local/cargo/bin/thegarii /app/thegarii
+
+# TODO: Add back later
+# COPY tools/sfeth/motd_generic /etc/
+# COPY tools/sfeth/99-sfeth-generic.sh /etc/profile.d/
+
+ENTRYPOINT /app/firearweave
