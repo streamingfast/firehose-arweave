@@ -19,7 +19,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
 
 RUN rm /etc/localtime && ln -snf /usr/share/zoneinfo/America/Montreal /etc/localtime && dpkg-reconfigure -f noninteractive tzdata
 
-ADD /firearweave /app/sfeth
+ADD /firearweave /app/firearweave
 COPY --from=thegarii-builder /usr/local/cargo/bin/thegarii /app/thegarii
 
 # TODO: Add back later
