@@ -115,12 +115,19 @@ func (s *Superviser) MarshalLogObject(enc zapcore.ObjectEncoder) error {
 }
 
 func (s *Superviser) lastBlockSeenLogPlugin(line string) {
-	//DMLOG BLOCK_BEGIN <HEIGHT>
-	if !strings.HasPrefix(line, "DMLOG BLOCK_BEGIN") {
+	// DMLOG BLOCK <HEIGHT> ...
+	if !strings.HasPrefix(line, "DMLOG BLOCK") {
 		return
 	}
 
-	blockNumStr := line[18:]
+	blockNumStr := line[12:]
+	nextSpace := strings.Index(blockNumStr, " ")
+	if nextSpace < 0 {
+		s.Logger.Error("unable to extract last block num, missing space", zap.String("line", line))
+		return
+	}
+
+	blockNumStr = blockNumStr[0:nextSpace]
 
 	blockNum, err := strconv.ParseUint(blockNumStr, 10, 64)
 	if err != nil {
@@ -132,27 +139,15 @@ func (s *Superviser) lastBlockSeenLogPlugin(line string) {
 		return
 	}
 
-	//metrics.SetHeadBlockNumber(blockNum)
+	// FIXME: Instrumentation needs to always have a way to easily decode height,
+	// hash and timestamp. Right now in Arweave, we have only the height.
+	//
+	// It's not important for now because only mindreaders are running and those
+	// updates are carried on directly by the console reader.
+	// s.headBlockUpdateFunc(s.lastBlockSeen,
+
 	s.lastBlockSeen = blockNum
 }
-
-// AddPeer sends a command through IPC socket to connect geth to the given peer
-
-//func (s *Superviser) sendGethCommand(cmd string) (string, error) {
-//	c, err := net.Dial("unix", s.ipcFilePath)
-//	if err != nil {
-//		return "", err
-//	}
-//	defer c.Close()
-//
-//	_, err = c.Write([]byte(cmd))
-//	if err != nil {
-//		return "", err
-//	}
-//
-//	resp, err := readString(c)
-//	return resp, err
-//}
 
 func getIPAddress() string {
 	ifaces, err := net.Interfaces()

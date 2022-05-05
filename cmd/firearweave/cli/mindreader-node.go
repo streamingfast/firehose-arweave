@@ -16,7 +16,6 @@ package cli
 
 import (
 	"context"
-	"fmt"
 	"math"
 	"time"
 
@@ -71,24 +70,15 @@ func getMindreaderLogPlugin(
 	tracker *bstream.Tracker,
 	appLogger *zap.Logger,
 ) (*mindreader.MindReaderPlugin, error) {
-	// blockmetaAddr := viper.GetString("common-blockmeta-addr")
 	tracker.AddGetter(bstream.NetworkLIBTarget, func(ctx context.Context) (bstream.BlockRef, error) {
 		// FIXME: Need to re-enable the tracker through blockmeta later on (see commented code below), might need to tweak some stuff to make mindreader work...
 		return bstream.BlockRefEmpty, nil
 	})
-	// tracker.AddGetter(bstream.NetworkLIBTarget, bstream.NetworkLIBBlockRefGetter(blockmetaAddr))
 
 	consoleReaderFactory := func(lines chan string) (mindreader.ConsolerReader, error) {
-		return codec.NewConsoleReader(lines)
-	}
-
-	consoleReaderTransformer := func(obj *bstream.Block) (*bstream.Block, error) {
-		blk, ok := obj.ToProtocol().(*pbcodec.Block)
-		if !ok {
-			return nil, fmt.Errorf("expected *pbcodec.Block, got %T", obj)
-		}
-
-		return codec.BlockFromProto(blk)
+		return codec.NewConsoleReader(lines, func(block *pbcodec.Block) {
+			metricsAndReadinessManager.UpdateHeadBlock(block.Height, string(block.IndepHash), time.Unix(int64(block.Timestamp), 0))
+		})
 	}
 
 	return mindreader.NewMindReaderPlugin(
@@ -98,7 +88,6 @@ func getMindreaderLogPlugin(
 		mergeThresholdBlockAge,
 		workingDir,
 		consoleReaderFactory,
-		consoleReaderTransformer,
 		tracker,
 		batchStartBlockNum,
 		batchStopBlockNum,

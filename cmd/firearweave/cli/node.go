@@ -2,6 +2,7 @@ package cli
 
 import (
 	"fmt"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
@@ -43,7 +44,7 @@ func registerCommonNodeFlags(cmd *cobra.Command, flagPrefix string, managerAPIAd
 		and all the invoked process standard error will be redirect to 'fireacme' standard's output.
 	`, flagPrefix+"path"))
 	cmd.Flags().String(flagPrefix+"manager-api-addr", managerAPIAddr, "Arweave node manager API address")
-	cmd.Flags().Duration(flagPrefix+"readiness-max-latency", 30*time.Second, "Determine the maximum head block latency at which the instance will be determined healthy. Some chains have more regular block production than others.")
+	cmd.Flags().Duration(flagPrefix+"readiness-max-latency", 10*time.Minute, "Determine the maximum head block latency at which the instance will be determined healthy. Some chains have more regular block production than others.")
 	cmd.Flags().String(flagPrefix+"arguments", "", "If not empty, overrides the list of default node arguments (computed from node type and role). Start with '+' to append to default args instead of replacing. ")
 }
 
@@ -103,7 +104,6 @@ func nodeFactoryFunc(flagPrefix, kind string) func(*launcher.Runtime) (launcher.
 
 		arguments := viper.GetString(flagPrefix + "arguments")
 		nodeArguments, err := buildNodeArguments(
-			sfDataDir,
 			nodeDataDir,
 			kind,
 			endpoints,
@@ -218,8 +218,8 @@ func (b *bootstrapper) Bootstrap() error {
 
 type nodeArgsByRole map[string]string
 
-func buildNodeArguments(dataDir, nodeDataDir, nodeRole string, endpoints []string, start, stop uint64, args string) ([]string, error) {
-	thegariiArgs := []string{"-d", "-B", "20", "console", "-f"}
+func buildNodeArguments(nodeDataDir, nodeRole string, endpoints []string, start, stop uint64, args string) ([]string, error) {
+	thegariiArgs := []string{"-d", "-B", "20", "console", "-f", "--data-directory", filepath.Join(nodeDataDir, "thegarii")}
 	if len(endpoints) > 0 {
 		setEndpoints := append([]string{"-e"}, endpoints...)
 		thegariiArgs = append(setEndpoints, thegariiArgs...)
@@ -230,8 +230,6 @@ func buildNodeArguments(dataDir, nodeDataDir, nodeRole string, endpoints []strin
 
 	if start != 0 {
 		thegariiArgs = append(thegariiArgs, []string{"-s", strconv.FormatUint(start, 10)}...)
-	} else {
-		thegariiArgs = append(thegariiArgs, []string{"-s", strconv.FormatUint(countBlocks(dataDir), 10)}...)
 	}
 
 	if stop != 0 {

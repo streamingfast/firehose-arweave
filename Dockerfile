@@ -7,7 +7,10 @@ ENV CARGO_NET_GIT_FETCH_WITH_CLI=true
 RUN --mount=type=cache,target=/var/cache/apk \
     --mount=type=cache,target=/home/rust/.cargo \
     rustup component add rustfmt \
-    && cargo install thegarii
+    && git clone https://github.com/streamingfast/thegarii \
+    && cd thegarii \
+    && cargo build --release \
+    && cp target/release/thegarii /home/rust/
 
 FROM ubuntu:20.04
 
@@ -20,7 +23,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
 RUN rm /etc/localtime && ln -snf /usr/share/zoneinfo/America/Montreal /etc/localtime && dpkg-reconfigure -f noninteractive tzdata
 
 ADD /firearweave /app/firearweave
-COPY --from=thegarii-builder /usr/local/cargo/bin/thegarii /app/thegarii
+COPY --from=thegarii-builder /home/rust/thegarii /app/thegarii
 
 # TODO: Add back later
 # COPY tools/sfeth/motd_generic /etc/

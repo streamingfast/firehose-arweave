@@ -19,17 +19,19 @@ import (
 // ConsoleReader is what reads the `geth` output directly. It builds
 // up some LogEntry objects. See `LogReader to read those entries .
 type ConsoleReader struct {
-	lines chan string
-	close func()
+	lines      chan string
+	close      func()
+	onNewBlock func(block *pbcodec.Block)
 
 	done chan interface{}
 }
 
-func NewConsoleReader(lines chan string) (*ConsoleReader, error) {
+func NewConsoleReader(lines chan string, onNewBlock func(block *pbcodec.Block)) (*ConsoleReader, error) {
 	l := &ConsoleReader{
-		lines: lines,
-		close: func() {},
-		done:  make(chan interface{}),
+		lines:      lines,
+		close:      func() {},
+		onNewBlock: onNewBlock,
+		done:       make(chan interface{}),
 	}
 	return l, nil
 }
@@ -100,6 +102,10 @@ func (r *ConsoleReader) next() (out *bstream.Block, err error) {
 			block, err := r.readBlock(tokens[1:])
 			if err != nil {
 				return nil, fmt.Errorf("read block: %w", err)
+			}
+
+			if r.onNewBlock != nil {
+				r.onNewBlock(block)
 			}
 
 			return BlockFromProto(block)

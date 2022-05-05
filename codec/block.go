@@ -38,7 +38,7 @@ func BlockFromProto(b *pbcodec.Block) (*bstream.Block, error) {
 		Id:             hex.EncodeToString(b.IndepHash),
 		Number:         b.Height,
 		PreviousId:     previousId,
-		Timestamp:      time.UnixMilli(int64(b.Timestamp)),
+		Timestamp:      time.Unix(int64(b.Timestamp), 0),
 		LibNum:         libNum,
 		PayloadKind:    pbbstream.Protocol_UNKNOWN,
 		PayloadVersion: 1,
