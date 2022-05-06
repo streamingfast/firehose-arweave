@@ -178,7 +178,6 @@ func nodeFactoryFunc(flagPrefix, kind string) func(*launcher.Runtime) (launcher.
 			batchStartBlockNum,
 			batchStopBlockNum,
 			blocksChanCapacity,
-			false,
 			waitTimeForUploadOnShutdown,
 			oneBlockFileSuffix,
 			chainOperator.Shutdown,
