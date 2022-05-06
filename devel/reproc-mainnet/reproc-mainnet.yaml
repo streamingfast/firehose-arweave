@@ -1,0 +1,10 @@
+start:
+  args:
+  - mindreader-node
+  flags:
+    mindreader-node-path: "/Users/maoueh/work/sf/thegarii/target/debug/thegarii"
+    mindreader-node-merge-threshold-block-age: 3h
+    mindreader-node-start-block-num: 927300
+    mindreader-node-stop-block-num: 927399
+
+

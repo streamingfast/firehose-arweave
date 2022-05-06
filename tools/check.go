@@ -16,7 +16,6 @@ package tools
 
 import (
 	"fmt"
-	"time"
 
 	pbcodec "github.com/ChainSafe/firehose-arweave/pb/sf/arweave/type/v1"
 	"github.com/spf13/cobra"
@@ -80,6 +79,6 @@ func blockPrinter(block *bstream.Block) {
 	fmt.Printf("Block %s, Prev: %s @ %s\n",
 		block.AsRef(),
 		block.PreviousRef(),
-		time.UnixMilli(int64(protocolBlock.Timestamp)),
+		protocolBlock.Time(),
 	)
 }
