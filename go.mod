@@ -19,8 +19,8 @@ require (
 	github.com/streamingfast/dstore v0.1.1-0.20220315134935-980696943a79
 	github.com/streamingfast/firehose v0.1.1-0.20220331194041-2bf2b9689682
 	github.com/streamingfast/logging v0.0.0-20220304214715-bc750a74b424
-	github.com/streamingfast/merger v0.0.3-0.20220506162918-4bcb0632b628
-	github.com/streamingfast/node-manager v0.0.2-0.20220506173344-444895eb9b73
+	github.com/streamingfast/merger v0.0.3-0.20220506192522-f8be80e054cb
+	github.com/streamingfast/node-manager v0.0.2-0.20220506192940-9e2e278b6008
 	github.com/streamingfast/pbgo v0.0.6-0.20220304191603-f73822f471ff
 	github.com/streamingfast/relayer v0.0.2-0.20220307182103-5f4178c54fde
 	github.com/streamingfast/sf-tools v0.0.0-20220307162924-1a39f7035cd5

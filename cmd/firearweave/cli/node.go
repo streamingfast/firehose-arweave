@@ -221,7 +221,7 @@ func (b *bootstrapper) Bootstrap() error {
 type nodeArgsByRole map[string]string
 
 func buildNodeArguments(nodeDataDir, nodeRole string, endpoints []string, start, stop uint64, args string) ([]string, error) {
-	thegariiArgs := []string{"-d", "-B", "20", "console", "-f", "--data-directory", filepath.Join(nodeDataDir, "thegarii")}
+	thegariiArgs := []string{"-d", "-B", "20", "-c", "50", "console", "-f", "--data-directory", filepath.Join(nodeDataDir, "thegarii")}
 	if len(endpoints) > 0 {
 		setEndpoints := append([]string{"-e"}, endpoints...)
 		thegariiArgs = append(setEndpoints, thegariiArgs...)
