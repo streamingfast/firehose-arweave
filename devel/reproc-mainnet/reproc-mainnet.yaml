@@ -2,10 +2,8 @@ start:
   args:
   - mindreader-node
   flags:
-    common-oneblock-store-url: gs://dfuseio-global-blocks-us/arweave-mainnet/v1-oneblock
-    mindreader-node-path: "/Users/maoueh/work/sf/thegarii/target/debug/thegarii"
+    # common-oneblock-store-url: gs://dfuseio-global-blocks-us/arweave-mainnet/v1-oneblock
+    mindreader-node-path: "thegarii"
     mindreader-node-merge-threshold-block-age: never
     mindreader-node-start-block-num: 927810
-    mindreader-node-stop-block-num: 928214
-
-
+    mindreader-node-stop-block-num: 927835

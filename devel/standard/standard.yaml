@@ -7,7 +7,7 @@ start:
   flags:
     common-blockstream-addr: "localhost:16011"
     # Specifies the path to the dummy chain binary is
-    mindreader-node-path: "/Users/maoueh/work/sf/thegarii/target/debug/thegarii"
+    mindreader-node-path: "thegarii"
     # debugging
     mindreader-node-debug-deep-mind: false
     mindreader-node-log-to-zap: true
