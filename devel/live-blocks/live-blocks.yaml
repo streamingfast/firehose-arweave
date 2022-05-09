@@ -1,0 +1,7 @@
+start:
+  args:
+  - merger
+  - mindreader-node
+  flags:
+    mindreader-node-path: "thegarii"
+    mindreader-node-merge-threshold-block-age: never

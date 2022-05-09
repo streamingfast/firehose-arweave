@@ -23,14 +23,14 @@ import (
 func init() {
 	launcher.RegisterCommonFlags = func(logger *zap.Logger, cmd *cobra.Command) error {
 		//Common stores configuration flags
-		cmd.Flags().String("common-blocks-store-url", MergedBlocksStoreURL, "[COMMON] Store URL (with prefix) where to read/write. Used by: relayer, fluxdb, trxdb-loader, blockmeta, search-indexer, search-live, search-forkresolver")
-		cmd.Flags().String("common-oneblock-store-url", OneBlockStoreURL, "[COMMON] Store URL (with prefix) to read/write one-block files. Used by: mindreader, merger")
-		cmd.Flags().String("common-blockstream-addr", RelayerServingAddr, "[COMMON] gRPC endpoint to get real-time blocks. Used by: fluxdb, trxdb-loader, blockmeta, search-indexer, search-live (relayer uses its own --relayer-blockstream-addr)")
+		cmd.Flags().String("common-merged-blocks-store-url", MergedBlocksStoreURL, "[COMMON] Store URL (with prefix) where to read/write. Used by: mindreader, merger, relayer and firehose")
+		cmd.Flags().String("common-one-blocks-store-url", OneBlockStoreURL, "[COMMON] Store URL (with prefix) to read/write one-block files. Used by: mindreader, merger")
+		cmd.Flags().String("common-live-source-addr", RelayerServingAddr, "[COMMON] gRPC endpoint to get real-time blocks. Used by: firehose")
 
-		cmd.Flags().Bool("common-atm-cache-enabled", false, "[COMMON] enable ATM caching")
-		cmd.Flags().String("common-atm-cache-dir", ATMDirectory, "[COMMON] ATM cache file directory.")
-		cmd.Flags().Int("common-atm-max-recent-entry-bytes", 21474836480, "[COMMON] ATM cache max size in bytes of recent entry heap")
-		cmd.Flags().Int("common-atm-max-entry-by-age-bytes", 21474836480, "[COMMON] ATM cache max size in bytes of age entry heap")
+		cmd.Flags().Bool("common-blocks-cache-enabled", false, "[COMMON] enable ATM caching")
+		cmd.Flags().String("common-blocks-cache-dir", ATMDirectory, "[COMMON] ATM cache file directory.")
+		cmd.Flags().Int("common-blocks-cache-max-recent-entry-bytes", 21474836480, "[COMMON] ATM cache max size in bytes of recent entry heap")
+		cmd.Flags().Int("common-blocks-cache-max-entry-by-age-bytes", 21474836480, "[COMMON] ATM cache max size in bytes of age entry heap")
 
 		cmd.Flags().Int("common-first-streamable-block", FirstStreamableBlock, "[COMMON] first streamable block number")
 
