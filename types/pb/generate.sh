@@ -13,22 +13,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )"
+ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd ../.. && pwd )"
 
 # Protobuf definitions
-PROTO_ACME=${2:-"$ROOT/proto"}
+PROTO_ARWEAVE=${1:-"$ROOT/proto"}
 
 function main() {
   checks
 
-  current_dir="`pwd`"
-  trap "cd \"$current_dir\"" EXIT
-  pushd "$ROOT/pb" &> /dev/null
+  cd "$ROOT/types/pb" &> /dev/null
 
   generate "sf/arweave/type/v1/type.proto"
 
-  echo "generate.sh - `date` - `whoami`" > $ROOT/pb/last_generate.txt
-  # echo "streamingfast/proto revision: `GIT_DIR=$PROTO/.git git rev-parse HEAD`" >> $ROOT/pb/last_generate.txt
+  echo "generate.sh - `date` - `whoami`" > ./last_generate.txt
+  echo "streamingfast/firehose-arweave/proto revision: `GIT_DIR=$ROOT/.git git log -n 1 --pretty=format:%h -- proto`" >> ./last_generate.txt
 }
 
 # usage:
@@ -41,7 +39,7 @@ function generate() {
     fi
 
     for file in "$@"; do
-      protoc -I$PROTO_ACME \
+      protoc -I$PROTO_ARWEAVE \
         --go_out=. --go_opt=paths=source_relative \
         --go-grpc_out=. --go-grpc_opt=paths=source_relative,require_unimplemented_servers=false \
         --experimental_allow_proto3_optional \

@@ -1,0 +1,2 @@
+generate.sh - Sun May  8 23:51:12 EDT 2022 - maoueh
+streamingfast/firehose-arweave/proto revision: 8eb4c7c

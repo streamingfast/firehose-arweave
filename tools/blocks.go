@@ -21,7 +21,7 @@ import (
 	"io"
 	"strconv"
 
-	pbcodec "github.com/ChainSafe/firehose-arweave/pb/sf/arweave/type/v1"
+	pbarweave "github.com/ChainSafe/firehose-arweave/types/pb/sf/arweave/type/v1"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/streamingfast/bstream"
@@ -115,7 +115,7 @@ func printBlocksE(cmd *cobra.Command, args []string) error {
 
 		seenBlockCount++
 
-		arweaveBlock := block.ToProtocol().(*pbcodec.Block)
+		arweaveBlock := block.ToProtocol().(*pbarweave.Block)
 
 		fmt.Printf("Block #%d (%s) (prev: %s): %d transactions\n",
 			block.Num(),
@@ -190,7 +190,7 @@ func printBlockE(cmd *cobra.Command, args []string) error {
 			)
 			continue
 		}
-		arweaveBlock := block.ToProtocol().(*pbcodec.Block)
+		arweaveBlock := block.ToProtocol().(*pbarweave.Block)
 
 		fmt.Printf("Block #%d (%s) (prev: %s): %d transactions\n",
 			block.Num(),
@@ -266,7 +266,7 @@ func printOneBlockE(cmd *cobra.Command, args []string) error {
 }
 
 func printBlock(block *bstream.Block) error {
-	nativeBlock := block.ToProtocol().(*pbcodec.Block)
+	nativeBlock := block.ToProtocol().(*pbarweave.Block)
 
 	data, err := json.MarshalIndent(nativeBlock, "", "  ")
 	if err != nil {

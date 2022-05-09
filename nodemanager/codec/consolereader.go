@@ -9,7 +9,8 @@ import (
 	"strings"
 	"time"
 
-	pbcodec "github.com/ChainSafe/firehose-arweave/pb/sf/arweave/type/v1"
+	"github.com/ChainSafe/firehose-arweave/types"
+	pbarweave "github.com/ChainSafe/firehose-arweave/types/pb/sf/arweave/type/v1"
 	"github.com/dvsekhvalnov/jose2go/base64url"
 	"github.com/golang/protobuf/proto"
 	"github.com/streamingfast/bstream"
@@ -21,12 +22,12 @@ import (
 type ConsoleReader struct {
 	lines      chan string
 	close      func()
-	onNewBlock func(block *pbcodec.Block)
+	onNewBlock func(block *pbarweave.Block)
 
 	done chan interface{}
 }
 
-func NewConsoleReader(lines chan string, onNewBlock func(block *pbcodec.Block)) (*ConsoleReader, error) {
+func NewConsoleReader(lines chan string, onNewBlock func(block *pbarweave.Block)) (*ConsoleReader, error) {
 	l := &ConsoleReader{
 		lines:      lines,
 		close:      func() {},
@@ -108,7 +109,7 @@ func (r *ConsoleReader) next() (out *bstream.Block, err error) {
 				r.onNewBlock(block)
 			}
 
-			return BlockFromProto(block)
+			return types.BlockFromProto(block)
 
 		default:
 			if tracer.Enabled() {
@@ -147,7 +148,7 @@ func (r *ConsoleReader) buildScanner(reader io.Reader) *bufio.Scanner {
 
 // Format:
 // DMLOG BLOCK <HEIGHT> <ENCODED_BLOCK>
-func (r *ConsoleReader) readBlock(params []string) (*pbcodec.Block, error) {
+func (r *ConsoleReader) readBlock(params []string) (*pbarweave.Block, error) {
 	if err := validateChunk(params, 2); err != nil {
 		return nil, fmt.Errorf("invalid log line length: %w", err)
 	}
@@ -169,7 +170,7 @@ func (r *ConsoleReader) readBlock(params []string) (*pbcodec.Block, error) {
 	}
 
 	// decode bytes to Block
-	block := &pbcodec.Block{}
+	block := &pbarweave.Block{}
 	err = proto.Unmarshal(bytes, block)
 	if err != nil {
 		return nil, fmt.Errorf("invalid encoded block: %w", err)

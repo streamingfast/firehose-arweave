@@ -17,7 +17,7 @@ package tools
 import (
 	"fmt"
 
-	pbcodec "github.com/ChainSafe/firehose-arweave/pb/sf/arweave/type/v1"
+	pbarweave "github.com/ChainSafe/firehose-arweave/types/pb/sf/arweave/type/v1"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/streamingfast/bstream"
@@ -75,7 +75,7 @@ func checkMergedBlocksE(cmd *cobra.Command, args []string) error {
 }
 
 func blockPrinter(block *bstream.Block) {
-	protocolBlock := block.ToProtocol().(*pbcodec.Block)
+	protocolBlock := block.ToProtocol().(*pbarweave.Block)
 	fmt.Printf("Block %s, Prev: %s @ %s\n",
 		block.AsRef(),
 		block.PreviousRef(),

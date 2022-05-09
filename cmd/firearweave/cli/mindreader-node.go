@@ -18,8 +18,8 @@ import (
 	"context"
 	"time"
 
-	"github.com/ChainSafe/firehose-arweave/codec"
-	pbcodec "github.com/ChainSafe/firehose-arweave/pb/sf/arweave/type/v1"
+	"github.com/ChainSafe/firehose-arweave/nodemanager/codec"
+	pbarweave "github.com/ChainSafe/firehose-arweave/types/pb/sf/arweave/type/v1"
 	"github.com/spf13/cobra"
 	"github.com/streamingfast/bstream"
 	"github.com/streamingfast/bstream/blockstream"
@@ -74,7 +74,7 @@ func getMindreaderLogPlugin(
 	})
 
 	consoleReaderFactory := func(lines chan string) (mindreader.ConsolerReader, error) {
-		return codec.NewConsoleReader(lines, func(block *pbcodec.Block) {
+		return codec.NewConsoleReader(lines, func(block *pbarweave.Block) {
 			metricsAndReadinessManager.UpdateHeadBlock(block.Height, string(block.IndepHash), block.Time())
 		})
 	}

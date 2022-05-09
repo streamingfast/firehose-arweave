@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package sf.arweave.type.v1;
 
-option go_package = "github.com/ChainSafe/firehose-arweave/pb/sf/arweave/type/v1;pbcodec";
+option go_package = "github.com/ChainSafe/firehose-arweave/types/pb/sf/arweave/type/v1;pbarweave";
 
 message BigInt {
   bytes bytes = 1;
@@ -75,22 +75,22 @@ message Transaction {
   // 1 or 2 for v1 or v2 transactions. More allowable in the future
   uint32 format = 1;
   // The transaction identifier.
-  bytes id = 2; 	 
+  bytes id = 2;
   // Either the identifier of the previous transaction from the same
   // wallet or the identifier of one of the last ?MAX_TX_ANCHOR_DEPTH blocks.
-  bytes last_tx = 3;   
+  bytes last_tx = 3;
   // The public key the transaction is signed with.
-  bytes owner = 4;   
+  bytes owner = 4;
   // A list of arbitrary key-value pairs
-  repeated Tag tags = 5; 	 
+  repeated Tag tags = 5;
   // The address of the recipient; if any. The SHA2-256 hash of the public key.
-  bytes target = 6;    
+  bytes target = 6;
   // The amount of Winstons to send to the recipient; if any.
-  BigInt quantity = 7;   
+  BigInt quantity = 7;
   // The data to upload; if any. For v2 transactions; the field is optional
   // - a fee is charged based on the `data_size` field;
   //   data may be uploaded any time later in chunks.
-  bytes data = 8;       	 
+  bytes data = 8;
   // Size in bytes of the transaction data.
   BigInt data_size = 9;
   // The Merkle root of the Merkle tree of data chunks.

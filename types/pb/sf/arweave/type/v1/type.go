@@ -1,4 +1,4 @@
-package pbcodec
+package pbarweave
 
 import "time"
 

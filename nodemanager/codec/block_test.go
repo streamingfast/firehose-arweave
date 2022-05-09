@@ -5,10 +5,9 @@ import (
 	"encoding/json"
 	"testing"
 
-	pbcodec "github.com/ChainSafe/firehose-arweave/pb/sf/arweave/type/v1"
+	pbarweave "github.com/ChainSafe/firehose-arweave/types/pb/sf/arweave/type/v1"
 	"github.com/streamingfast/bstream"
 	pbbstream "github.com/streamingfast/pbgo/sf/bstream/v1"
-
 	"google.golang.org/protobuf/proto"
 )
 
@@ -17,7 +16,7 @@ const BLOCK_19 = "080112307bbf0f04a8c9fba14ecc332db142290db9a0fc73a772e1cd199c5c
 func TestDecode(t *testing.T) {
 	bytes, _ := hex.DecodeString(BLOCK_19)
 
-	b := &pbcodec.Block{}
+	b := &pbarweave.Block{}
 	proto.Unmarshal(bytes, b)
 
 	block := &bstream.Block{

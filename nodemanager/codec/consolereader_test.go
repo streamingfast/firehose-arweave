@@ -24,7 +24,7 @@ import (
 	"strings"
 	"testing"
 
-	pbcodec "github.com/ChainSafe/firehose-arweave/pb/sf/arweave/type/v1"
+	pbarweave "github.com/ChainSafe/firehose-arweave/types/pb/sf/arweave/type/v1"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/zap"
@@ -61,7 +61,7 @@ func TestParseFromFile(t *testing.T) {
 				}
 				require.NoError(t, err)
 
-				block := out.ToProtocol().(*pbcodec.Block)
+				block := out.ToProtocol().(*pbarweave.Block)
 
 				if !isNil(block) {
 					if !first {

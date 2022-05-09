@@ -1,10 +1,10 @@
-package codec
+package types
 
 import (
 	"encoding/hex"
 	"fmt"
 
-	pbcodec "github.com/ChainSafe/firehose-arweave/pb/sf/arweave/type/v1"
+	pbarweave "github.com/ChainSafe/firehose-arweave/types/pb/sf/arweave/type/v1"
 	"github.com/streamingfast/bstream"
 	pbbstream "github.com/streamingfast/pbgo/sf/bstream/v1"
 	"google.golang.org/protobuf/proto"
@@ -12,7 +12,7 @@ import (
 
 const CONFIRMS uint64 = 20
 
-func BlockFromProto(b *pbcodec.Block) (*bstream.Block, error) {
+func BlockFromProto(b *pbarweave.Block) (*bstream.Block, error) {
 	content, err := proto.Marshal(b)
 	if err != nil {
 		return nil, fmt.Errorf("unable to marshal to binary form: %s", err)
