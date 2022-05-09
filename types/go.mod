@@ -1,4 +1,4 @@
-module github.com/ChainSafe/firehose-arweave/types
+module github.com/streamingfast/firehose-arweave/types
 
 go 1.17
 

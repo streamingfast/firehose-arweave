@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package sf.arweave.type.v1;
 
-option go_package = "github.com/ChainSafe/firehose-arweave/types/pb/sf/arweave/type/v1;pbarweave";
+option go_package = "github.com/streamingfast/firehose-arweave/types/pb/sf/arweave/type/v1;pbarweave";
 
 message BigInt {
   bytes bytes = 1;

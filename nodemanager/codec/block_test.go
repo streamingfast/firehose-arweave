@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"testing"
 
-	pbarweave "github.com/ChainSafe/firehose-arweave/types/pb/sf/arweave/type/v1"
 	"github.com/streamingfast/bstream"
+	pbarweave "github.com/streamingfast/firehose-arweave/types/pb/sf/arweave/type/v1"
 	pbbstream "github.com/streamingfast/pbgo/sf/bstream/v1"
 	"google.golang.org/protobuf/proto"
 )

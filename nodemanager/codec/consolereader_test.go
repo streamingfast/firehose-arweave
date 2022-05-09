@@ -24,7 +24,7 @@ import (
 	"strings"
 	"testing"
 
-	pbarweave "github.com/ChainSafe/firehose-arweave/types/pb/sf/arweave/type/v1"
+	pbarweave "github.com/streamingfast/firehose-arweave/types/pb/sf/arweave/type/v1"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/zap"

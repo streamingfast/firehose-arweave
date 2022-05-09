@@ -10,10 +10,10 @@ import (
 	"time"
 
 	"github.com/ChainSafe/firehose-arweave/types"
-	pbarweave "github.com/ChainSafe/firehose-arweave/types/pb/sf/arweave/type/v1"
 	"github.com/dvsekhvalnov/jose2go/base64url"
 	"github.com/golang/protobuf/proto"
 	"github.com/streamingfast/bstream"
+	pbarweave "github.com/streamingfast/firehose-arweave/types/pb/sf/arweave/type/v1"
 	"go.uber.org/zap"
 )
 

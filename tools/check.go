@@ -17,10 +17,10 @@ package tools
 import (
 	"fmt"
 
-	pbarweave "github.com/ChainSafe/firehose-arweave/types/pb/sf/arweave/type/v1"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/streamingfast/bstream"
+	pbarweave "github.com/streamingfast/firehose-arweave/types/pb/sf/arweave/type/v1"
 	sftools "github.com/streamingfast/sf-tools"
 )
 

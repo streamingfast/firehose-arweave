@@ -21,11 +21,11 @@ import (
 	"io"
 	"strconv"
 
-	pbarweave "github.com/ChainSafe/firehose-arweave/types/pb/sf/arweave/type/v1"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/streamingfast/bstream"
 	"github.com/streamingfast/dstore"
+	pbarweave "github.com/streamingfast/firehose-arweave/types/pb/sf/arweave/type/v1"
 	"go.uber.org/zap"
 )
 

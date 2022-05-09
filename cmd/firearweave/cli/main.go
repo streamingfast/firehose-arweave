@@ -6,10 +6,10 @@ import (
 	"time"
 
 	// Needs to be in this file which is the main entry of wrapper binary
-	_ "github.com/ChainSafe/firehose-arweave/types"
 	_ "github.com/streamingfast/dauth/authenticator/null"   // auth null plugin
 	_ "github.com/streamingfast/dauth/authenticator/secret" // auth secret/hard-coded plugin
 	_ "github.com/streamingfast/dauth/ratelimiter/null"     // ratelimiter plugin
+	_ "github.com/streamingfast/firehose-arweave/types"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -20,7 +20,7 @@ import (
 	"go.uber.org/zap"
 )
 
-var rootLog, _ = logging.RootLogger("firearweave", "github.com/ChainSafe/firehose-arweave/cmd/firearweave/cli")
+var rootLog, _ = logging.RootLogger("firearweave", "github.com/streamingfast/firehose-arweave/cmd/firearweave/cli")
 
 var RootCmd = &cobra.Command{Use: "firearweave", Short: "Arweave on StreamingFast"}
 var allFlags = make(map[string]bool) // used as global because of async access to cobra init functions
