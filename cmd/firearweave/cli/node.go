@@ -255,7 +255,6 @@ func buildNodeArguments(nodeDataDir, nodeRole string, endpoints []string, start,
 		argsString = args
 	}
 
-	fmt.Println(argsString)
 	argsString = strings.Replace(argsString, "{node-data-dir}", nodeDataDir, -1)
 	argsSlice := strings.Fields(argsString)
 	return argsSlice, nil
