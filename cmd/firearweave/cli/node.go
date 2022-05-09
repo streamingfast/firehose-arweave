@@ -7,11 +7,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ChainSafe/firehose-arweave/nodemanager"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/streamingfast/bstream/blockstream"
 	"github.com/streamingfast/dlauncher/launcher"
+	"github.com/streamingfast/firehose-arweave/nodemanager"
 	"github.com/streamingfast/logging"
 	nodeManager "github.com/streamingfast/node-manager"
 	nodeManagerApp "github.com/streamingfast/node-manager/app/node_manager2"
@@ -23,11 +23,11 @@ import (
 	"google.golang.org/grpc"
 )
 
-var nodeLogger, nodeTracer = logging.PackageLogger("node", "github.com/ChainSafe/firehose-arweave/node")
-var nodeArweaveLogger, nodeArweaveTracer = logging.PackageLogger("node.arweave", "github.com/ChainSafe/firehose-arweave/node/dummy-chain", DefaultLevelInfo)
+var nodeLogger, nodeTracer = logging.PackageLogger("node", "github.com/streamingfast/firehose-arweave/node")
+var nodeArweaveLogger, nodeArweaveTracer = logging.PackageLogger("node.arweave", "github.com/streamingfast/firehose-arweave/node/dummy-chain", DefaultLevelInfo)
 
-var mindreaderLogger, mindreaderTracer = logging.PackageLogger("mindreader", "github.com/ChainSafe/firehose-arweave/mindreader")
-var mindreaderArweaveLogger, mindreaderArweaveTracer = logging.PackageLogger("mindreader.arweave", "github.com/ChainSafe/firehose-arweave/mindreader/dummy-chain", DefaultLevelInfo)
+var mindreaderLogger, mindreaderTracer = logging.PackageLogger("mindreader", "github.com/streamingfast/firehose-arweave/mindreader")
+var mindreaderArweaveLogger, mindreaderArweaveTracer = logging.PackageLogger("mindreader.arweave", "github.com/streamingfast/firehose-arweave/mindreader/dummy-chain", DefaultLevelInfo)
 
 func registerCommonNodeFlags(cmd *cobra.Command, flagPrefix string, managerAPIAddr string) {
 	cmd.Flags().String(flagPrefix+"path", "thegarii", FlagDescription(`

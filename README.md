@@ -5,7 +5,6 @@ Firehose integration for Arweave.
 `firehose-arweave` use [thegarii](https://github.com/ChainSafe/thegarii) as the source
 of Arweave blocks.
 
-
 ## Quick Start
 
 > NOTE
@@ -27,6 +26,10 @@ The Bash script runs in dry-mode by default, so you can check first that everyth
 
 Releases are performed using [goreleaser](https://goreleaser.com/).
 
+
+## Credits
+
+[ChainSafe](https://chainsafe.io/) did the initial integration of Firehose on Arweave.
 
 ## Contributing
 

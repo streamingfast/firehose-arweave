@@ -14,7 +14,7 @@
 
 package cli
 
-import "github.com/ChainSafe/firehose-arweave/tools"
+import "github.com/streamingfast/firehose-arweave/tools"
 
 func init() {
 	RootCmd.AddCommand(tools.Cmd)

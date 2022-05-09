@@ -9,10 +9,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ChainSafe/firehose-arweave/types"
 	"github.com/dvsekhvalnov/jose2go/base64url"
 	"github.com/golang/protobuf/proto"
 	"github.com/streamingfast/bstream"
+	"github.com/streamingfast/firehose-arweave/types"
 	pbarweave "github.com/streamingfast/firehose-arweave/types/pb/sf/arweave/type/v1"
 	"go.uber.org/zap"
 )

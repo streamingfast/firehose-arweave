@@ -18,10 +18,10 @@ import (
 	"context"
 	"time"
 
-	"github.com/ChainSafe/firehose-arweave/nodemanager/codec"
 	"github.com/spf13/cobra"
 	"github.com/streamingfast/bstream"
 	"github.com/streamingfast/bstream/blockstream"
+	"github.com/streamingfast/firehose-arweave/nodemanager/codec"
 	pbarweave "github.com/streamingfast/firehose-arweave/types/pb/sf/arweave/type/v1"
 	"github.com/streamingfast/logging"
 	nodeManager "github.com/streamingfast/node-manager"
