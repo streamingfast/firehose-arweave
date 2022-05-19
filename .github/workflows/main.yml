@@ -23,6 +23,14 @@ jobs:
         with:
           go-version: ${{ matrix.go-version }}
 
+      - name: Setup SSH Keys and known_hosts
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+          ssh-add - <<< "${{ secrets.SSH_EOSN_DEPLOY_KEY }}"
+          git config --global url."git@github.com:eosnationftw".insteadOf "https://github.com/eosnationftw"
+
       - name: Check out code
         uses: actions/checkout@v3
 
@@ -42,5 +50,8 @@ jobs:
             ${{ runner.os }}-go-
 
       - name: Run Tests
+        env:
+          GOPRIVATE: github.com/eosnationftw
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: ./bin/test.sh
 

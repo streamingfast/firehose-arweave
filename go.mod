@@ -14,10 +14,8 @@ require (
 	github.com/streamingfast/derr v0.0.0-20220307162255-f277e08753fa
 	github.com/streamingfast/dgrpc v0.0.0-20220307180102-b2d417ac8da7
 	github.com/streamingfast/dlauncher v0.0.0-20220307153121-5674e1b64d40
-	github.com/streamingfast/dmetering v0.0.0-20220307162406-37261b4b3de9
-	github.com/streamingfast/dmetrics v0.0.0-20220307162521-2389094ab4a1
+	github.com/streamingfast/dmetrics v0.0.0-20220307162521-2389094ab4a1 // indirect
 	github.com/streamingfast/dstore v0.1.1-0.20220315134935-980696943a79
-	github.com/streamingfast/firehose v0.1.1-0.20220331194041-2bf2b9689682
 	github.com/streamingfast/firehose-arweave/types v0.0.0-20220509041238-3d3270820c99
 	github.com/streamingfast/logging v0.0.0-20220304214715-bc750a74b424
 	github.com/streamingfast/merger v0.0.3-0.20220506192522-f8be80e054cb
@@ -33,4 +31,4 @@ require (
 
 replace github.com/ShinyTrinkets/overseer => github.com/streamingfast/overseer v0.2.1-0.20210326144022-ee491780e3ef
 
-replace github.com/streamingfast/dauth => github.com/eosnationftw/dauth v0.0.0-20210818092801-fb989ed88d76
+replace github.com/streamingfast/dauth => github.com/eosnationftw/dauth v0.0.0-20220519160027-7059fc748081
