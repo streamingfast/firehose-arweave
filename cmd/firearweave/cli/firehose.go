@@ -40,6 +40,7 @@ func init() {
 			blockstreamAddr := viper.GetString("common-live-source-addr")
 			if blockstreamAddr != "" {
 				tracker.AddGetter(bstream.BlockStreamLIBTarget, bstream.StreamLIBBlockRefGetter(blockstreamAddr))
+				tracker.AddGetter(bstream.BlockStreamHeadTarget, bstream.StreamHeadBlockRefGetter(blockstreamAddr))
 			}
 
 			// FIXME: That should be a shared dependencies across `dfuse for EOSIO`

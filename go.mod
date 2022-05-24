@@ -17,12 +17,12 @@ require (
 	github.com/streamingfast/dmetering v0.0.0-20220307162406-37261b4b3de9
 	github.com/streamingfast/dmetrics v0.0.0-20220307162521-2389094ab4a1
 	github.com/streamingfast/dstore v0.1.1-0.20220315134935-980696943a79
-	github.com/streamingfast/firehose v0.1.1-0.20220331194041-2bf2b9689682
+	github.com/streamingfast/firehose v0.1.1-0.20220524194622-31eac090a1a5
 	github.com/streamingfast/firehose-arweave/types v0.0.0-20220509041238-3d3270820c99
 	github.com/streamingfast/logging v0.0.0-20220304214715-bc750a74b424
 	github.com/streamingfast/merger v0.0.3-0.20220510150626-2e0bad630abf
 	github.com/streamingfast/node-manager v0.0.2-0.20220506192940-9e2e278b6008
-	github.com/streamingfast/pbgo v0.0.6-0.20220304191603-f73822f471ff
+	github.com/streamingfast/pbgo v0.0.6-0.20220428192744-f80aee7d4688
 	github.com/streamingfast/relayer v0.0.2-0.20220307182103-5f4178c54fde
 	github.com/streamingfast/sf-tools v0.0.0-20220307162924-1a39f7035cd5
 	github.com/stretchr/testify v1.7.1-0.20210427113832-6241f9ab9942
