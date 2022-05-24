@@ -6,7 +6,7 @@ require (
 	github.com/ShinyTrinkets/overseer v0.3.0
 	github.com/dvsekhvalnov/jose2go v1.5.0
 	github.com/golang/protobuf v1.5.2
-	github.com/spf13/cobra v1.2.1
+	github.com/spf13/cobra v1.4.0
 	github.com/spf13/viper v1.8.1
 	github.com/streamingfast/bstream v0.0.2-0.20220419181641-fdf5ab55791d
 	github.com/streamingfast/cli v0.0.4-0.20220113202443-f7bcefa38f7e
@@ -24,7 +24,7 @@ require (
 	github.com/streamingfast/node-manager v0.0.2-0.20220506192940-9e2e278b6008
 	github.com/streamingfast/pbgo v0.0.6-0.20220428192744-f80aee7d4688
 	github.com/streamingfast/relayer v0.0.2-0.20220307182103-5f4178c54fde
-	github.com/streamingfast/sf-tools v0.0.0-20220307162924-1a39f7035cd5
+	github.com/streamingfast/sf-tools v0.0.0-20220510152242-8343cb8e91aa
 	github.com/stretchr/testify v1.7.1-0.20210427113832-6241f9ab9942
 	go.uber.org/zap v1.21.0
 	google.golang.org/grpc v1.44.0
