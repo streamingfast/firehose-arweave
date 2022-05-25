@@ -32,3 +32,5 @@ require (
 )
 
 replace github.com/ShinyTrinkets/overseer => github.com/streamingfast/overseer v0.2.1-0.20210326144022-ee491780e3ef
+
+replace github.com/streamingfast/dauth => github.com/eosnationftw/dauth v0.0.0-20220525063810-eca84ecd2ac5

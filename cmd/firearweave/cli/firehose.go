@@ -9,6 +9,7 @@ import (
 	"github.com/spf13/viper"
 	"github.com/streamingfast/bstream"
 	dauthAuthenticator "github.com/streamingfast/dauth/authenticator"
+	_ "github.com/streamingfast/dauth/metering/redis"
 	"github.com/streamingfast/dlauncher/launcher"
 	"github.com/streamingfast/dmetering"
 	"github.com/streamingfast/dmetrics"
