@@ -29,4 +29,4 @@ COPY --from=thegarii-builder /home/rust/thegarii /app/thegarii
 # COPY tools/sfeth/motd_generic /etc/
 # COPY tools/sfeth/99-sfeth-generic.sh /etc/profile.d/
 
-ENTRYPOINT /app/firearweave
+ENTRYPOINT ["/app/firearweave"]
