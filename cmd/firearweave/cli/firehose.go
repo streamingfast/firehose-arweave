@@ -6,7 +6,6 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/streamingfast/bstream"
 	dauthAuthenticator "github.com/streamingfast/dauth/authenticator"
 	"github.com/streamingfast/dlauncher/launcher"
 	"github.com/streamingfast/dmetering"
@@ -32,14 +31,8 @@ func init() {
 		},
 
 		FactoryFunc: func(runtime *launcher.Runtime) (launcher.App, error) {
-
 			sfDataDir := runtime.AbsDataDir
-			// FIXME blockstream-based-tracker ???
-			tracker := bstream.NewTracker(50)
 			blockstreamAddr := viper.GetString("common-blockstream-addr")
-			if blockstreamAddr != "" {
-				tracker.AddGetter(bstream.BlockStreamLIBTarget, bstream.StreamLIBBlockRefGetter(blockstreamAddr))
-			}
 
 			// FIXME: That should be a shared dependencies across `Ethereum on StreamingFast`
 			authenticator, err := dauthAuthenticator.New(viper.GetString("common-auth-plugin"))

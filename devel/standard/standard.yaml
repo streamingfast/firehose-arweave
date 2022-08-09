@@ -14,6 +14,5 @@ start:
     mindreader-node-merge-threshold-block-age: never
     # Once fully live with chain, those should be removed, they are used so that Firehose serves
     # blocks even if the chain is not live yet.
-    firehose-real-time-tolerance: 999999999s
     relayer-max-source-latency: 999999999s
 

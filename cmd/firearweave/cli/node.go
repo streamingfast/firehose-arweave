@@ -167,8 +167,6 @@ func nodeFactoryFunc(flagPrefix, kind string) func(*launcher.Runtime) (launcher.
 		oneBlockFileSuffix := viper.GetString("mindreader-node-one-block-suffix")
 		blocksChanCapacity := viper.GetInt("mindreader-node-blocks-chan-capacity")
 
-		tracker := runtime.Tracker.Clone()
-
 		mindreaderPlugin, err := getMindreaderLogPlugin(
 			blockStreamServer,
 			oneBlockStoreURL,
@@ -182,7 +180,6 @@ func nodeFactoryFunc(flagPrefix, kind string) func(*launcher.Runtime) (launcher.
 			oneBlockFileSuffix,
 			chainOperator.Shutdown,
 			metricsAndReadinessManager,
-			tracker,
 			appLogger,
 			appTracer,
 		)

@@ -15,7 +15,6 @@
 package cli
 
 import (
-	"context"
 	"time"
 
 	"github.com/spf13/cobra"
@@ -64,14 +63,9 @@ func getMindreaderLogPlugin(
 	oneBlockFileSuffix string,
 	operatorShutdownFunc func(error),
 	metricsAndReadinessManager *nodeManager.MetricsAndReadinessManager,
-	tracker *bstream.Tracker,
 	appLogger *zap.Logger,
 	appTracer logging.Tracer,
 ) (*mindreader.MindReaderPlugin, error) {
-	tracker.AddGetter(bstream.NetworkLIBTarget, func(ctx context.Context) (bstream.BlockRef, error) {
-		// FIXME: Need to re-enable the tracker through blockmeta later on (see commented code below), might need to tweak some stuff to make mindreader work...
-		return bstream.BlockRefEmpty, nil
-	})
 
 	consoleReaderFactory := func(lines chan string) (mindreader.ConsolerReader, error) {
 		return codec.NewConsoleReader(lines, func(block *pbarweave.Block) {
