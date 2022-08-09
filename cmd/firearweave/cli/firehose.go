@@ -24,15 +24,13 @@ func init() {
 	launcher.RegisterApp(rootLog, &launcher.AppDef{
 		ID:          "firehose",
 		Title:       "Block Firehose",
-		Description: "Provides on-demand filtered blocks, depends on common-merged-blocks-store-url and common-live-source-addr",
+		Description: "Provides on-demand filtered blocks, depends on mergd blocks and live source",
 		RegisterFlags: func(cmd *cobra.Command) error {
 			cmd.Flags().String("firehose-grpc-listen-addr", FirehoseGRPCServingAddr, "Address on which the firehose will listen, appending * to the end of the listen address will start the server over an insecure TLS connection. By default firehose will start in plain-text mode.")
 			return nil
 		},
 
 		FactoryFunc: func(runtime *launcher.Runtime) (launcher.App, error) {
-			sfDataDir := runtime.AbsDataDir
-			blockstreamAddr := viper.GetString("common-blockstream-addr")
 
 			// FIXME: That should be a shared dependencies across `Ethereum on StreamingFast`
 			authenticator, err := dauthAuthenticator.New(viper.GetString("common-auth-plugin"))
@@ -47,10 +45,6 @@ func init() {
 			}
 			dmetering.SetDefaultMeter(metering)
 
-			mergedBlocksStoreURL := MustReplaceDataDir(sfDataDir, viper.GetString("common-blocks-store-url"))
-			oneBlocksStoreURL := MustReplaceDataDir(sfDataDir, viper.GetString("common-oneblock-store-url"))
-			forkedBlocksStoreURL := MustReplaceDataDir(sfDataDir, viper.GetString("common-forkedblocks-store-url"))
-
 			var possibleIndexSizes []uint64
 			for _, size := range viper.GetIntSlice("firehose-block-index-sizes") {
 				if size < 0 {
@@ -59,11 +53,12 @@ func init() {
 				possibleIndexSizes = append(possibleIndexSizes, uint64(size))
 			}
 
+			sfDataDir := runtime.AbsDataDir
 			return firehoseApp.New(appLogger, &firehoseApp.Config{
-				MergedBlocksStoreURL:    mergedBlocksStoreURL,
-				OneBlocksStoreURL:       oneBlocksStoreURL,
-				ForkedBlocksStoreURL:    forkedBlocksStoreURL,
-				BlockStreamAddr:         blockstreamAddr,
+				MergedBlocksStoreURL:    MustReplaceDataDir(sfDataDir, viper.GetString("common-merged-blocks-store-url")),
+				OneBlocksStoreURL:       MustReplaceDataDir(sfDataDir, viper.GetString("common-one-blocks-store-url")),
+				ForkedBlocksStoreURL:    MustReplaceDataDir(sfDataDir, viper.GetString("common-forked-blocks-store-url")),
+				BlockStreamAddr:         viper.GetString("common-live-source-addr"),
 				GRPCListenAddr:          viper.GetString("firehose-grpc-listen-addr"),
 				GRPCShutdownGracePeriod: time.Second,
 			}, &firehoseApp.Modules{

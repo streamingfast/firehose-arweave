@@ -46,14 +46,16 @@ func init() {
 		FactoryFunc: func(runtime *launcher.Runtime) (launcher.App, error) {
 			sfDataDir := runtime.AbsDataDir
 			return mergerApp.New(&mergerApp.Config{
-				StorageOneBlockFilesPath:     MustReplaceDataDir(sfDataDir, viper.GetString("common-oneblock-store-url")),
-				StorageMergedBlocksFilesPath: MustReplaceDataDir(sfDataDir, viper.GetString("common-blocks-store-url")),
-				StorageForkedBlocksFilesPath: MustReplaceDataDir(sfDataDir, viper.GetString("common-forkedblocks-store-url")),
-				GRPCListenAddr:               viper.GetString("merger-grpc-listen-addr"),
-				PruneForkedBlocksAfter:       viper.GetUint64("merger-prune-forked-blocks-after"),
-				StopBlock:                    viper.GetUint64("merger-stop-block"),
-				TimeBetweenPruning:           viper.GetDuration("merger-time-between-store-pruning"),
-				TimeBetweenPolling:           viper.GetDuration("merger-time-between-store-lookups"),
+
+				StorageMergedBlocksFilesPath: MustReplaceDataDir(sfDataDir, viper.GetString("common-merged-blocks-store-url")),
+				StorageOneBlockFilesPath:     MustReplaceDataDir(sfDataDir, viper.GetString("common-one-blocks-store-url")),
+				StorageForkedBlocksFilesPath: MustReplaceDataDir(sfDataDir, viper.GetString("common-forked-blocks-store-url")),
+
+				GRPCListenAddr:         viper.GetString("merger-grpc-listen-addr"),
+				PruneForkedBlocksAfter: viper.GetUint64("merger-prune-forked-blocks-after"),
+				StopBlock:              viper.GetUint64("merger-stop-block"),
+				TimeBetweenPruning:     viper.GetDuration("merger-time-between-store-pruning"),
+				TimeBetweenPolling:     viper.GetDuration("merger-time-between-store-lookups"),
 			}), nil
 		},
 	})
