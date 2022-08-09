@@ -21,6 +21,7 @@ const (
 	ATMDirectory         string = "file://{data-dir}/atm"
 	MergedBlocksStoreURL string = "file://{data-dir}/storage/merged-blocks"
 	OneBlockStoreURL     string = "file://{data-dir}/storage/one-blocks"
+	ForkedBlockStoreURL  string = "file://{data-dir}/storage/forked-blocks"
 
 	// Tweak this for your chain
 	FirstStreamableBlock int = 0

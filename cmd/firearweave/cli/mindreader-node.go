@@ -75,14 +75,16 @@ func getMindreaderLogPlugin(
 
 	consoleReaderFactory := func(lines chan string) (mindreader.ConsolerReader, error) {
 		return codec.NewConsoleReader(lines, func(block *pbarweave.Block) {
-			metricsAndReadinessManager.UpdateHeadBlock(block.Height, string(block.IndepHash), block.Time())
+			metricsAndReadinessManager.UpdateHeadBlock(&bstream.Block{
+				Number:    block.Height,
+				Id:        string(block.IndepHash),
+				Timestamp: block.Time(),
+			})
 		})
 	}
 
 	return mindreader.NewMindReaderPlugin(
 		oneBlockStoreURL,
-		mergedBlockStoreURL,
-		mergeThresholdBlockAge,
 		workingDir,
 		consoleReaderFactory,
 		batchStartBlockNum,
@@ -92,7 +94,6 @@ func getMindreaderLogPlugin(
 		func(error) {
 			operatorShutdownFunc(nil)
 		},
-		waitTimeForUploadOnShutdown,
 		oneBlockFileSuffix,
 		blockStreamServer,
 		appLogger,
