@@ -3,7 +3,7 @@
 ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 clean=
-sfarweave="$ROOT/../firearweave"
+firearweave="$ROOT/../firearweave"
 
 main() {
   pushd "$ROOT" &> /dev/null
@@ -27,7 +27,7 @@ main() {
   # check if thegarii exists
   check_thegarii
 
-  exec $sfarweave -c $(basename $ROOT).yaml start "$@"
+  exec $firearweave -c $(basename $ROOT).yaml start "$@"
 }
 
 usage_error() {
