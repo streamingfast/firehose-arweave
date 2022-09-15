@@ -13,9 +13,9 @@ of Arweave blocks.
 ```
 # Arguments shared with both thegarii:
 #
-# --mindreader-node-start-block-num
-# --mindreader-node-stop-block-num
-./devel/standard/start.sh -- --mindreader-node-start-block-num 911988
+# --reader-node-start-block-num
+# --reader-node-stop-block-num
+./devel/standard/start.sh -- --reader-node-start-block-num 911988
 ```
 
 ## Release

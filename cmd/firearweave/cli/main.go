@@ -66,7 +66,7 @@ func Main() {
 	derr.Check("arweave-blockchain", RootCmd.Execute())
 }
 
-var startCmdExample = `firearweave start mindreader`
+var startCmdExample = `firearweave start reader`
 var startCmdHelpTemplate = `Usage:{{if .Runnable}}
   {{.UseLine}}{{end}} [all|command1 [command2...]]{{if gt (len .Aliases) 0}}
 

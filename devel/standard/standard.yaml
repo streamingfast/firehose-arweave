@@ -2,16 +2,16 @@ start:
   args:
   - relayer
   - merger
-  - mindreader-node
+  - reader-node
   - firehose
   flags:
     common-live-source-addr: "localhost:16011"
     # Specifies the path to the dummy chain binary is
-    mindreader-node-path: "thegarii"
+    reader-node-path: "thegarii"
     # debugging
-    mindreader-node-debug-deep-mind: false
-    mindreader-node-log-to-zap: true
-    mindreader-node-merge-threshold-block-age: never
+    reader-node-debug-firehose-logs: false
+    reader-node-log-to-zap: true
+    reader-node-merge-threshold-block-age: never
     # Once fully live with chain, those should be removed, they are used so that Firehose serves
     # blocks even if the chain is not live yet.
     relayer-max-source-latency: 999999999s
