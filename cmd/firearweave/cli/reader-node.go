@@ -40,7 +40,7 @@ func registerReaderNodeFlags(cmd *cobra.Command) error {
 	cmd.Flags().Uint("reader-node-stop-block-num", 0, "Shutdown reader when we the following 'stop-block-num' has been reached, inclusively.")
 	cmd.Flags().Int("reader-node-blocks-chan-capacity", 100, "Capacity of the channel holding blocks read by the reader. Process will shutdown superviser/geth if the channel gets over 90% of that capacity to prevent horrible consequences. Raise this number when processing tiny blocks very quickly")
 	cmd.Flags().String("reader-node-one-block-suffix", "default", FlagDescription(`
-		Unique identifier for Reader, so that it can produce 'oneblock files' in the same store as another instance without competing
+		Unique identifier for Reader, so that it can produce 'one block files' in the same store as another instance without competing
 		for writes. You should set this flag if you have multiple reader running, each one should get a unique identifier, the
 		hostname value is a good value to use.
 	`))
