@@ -31,7 +31,7 @@ var readerArweaveLogger, readerArweaveTracer = logging.PackageLogger("reader.arw
 
 func registerCommonNodeFlags(cmd *cobra.Command, flagPrefix string, managerAPIAddr string) {
 	cmd.Flags().String(flagPrefix+"path", "thegarii", FlagDescription(`
-		Process that will be invoked reader (a.k.a reader) component, can be a full path or just the binary's name, in which case the binary is
+		Process that will be invoked reader component, can be a full path or just the binary's name, in which case the binary is
 		searched for paths listed by the PATH environment variable (following operating system rules around PATH handling).
 	`))
 	cmd.Flags().String(flagPrefix+"data-dir", "{data-dir}/{node-role}/data", "Directory for node data ({node-role} is either reader, peering or dev-miner)")
