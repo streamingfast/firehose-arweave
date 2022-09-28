@@ -8,13 +8,8 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/streamingfast/dgrpc"
 	"github.com/streamingfast/dlauncher/launcher"
 )
-
-func init() {
-	dgrpc.Verbosity = 2
-}
 
 func setupCmd(cmd *cobra.Command) error {
 	cmd.SilenceUsage = true
@@ -62,10 +57,11 @@ func setupCmd(cmd *cobra.Command) error {
 
 	launcher.SetupLogger(rootLog, &launcher.LoggingOptions{
 		WorkingDir:    viper.GetString("global-data-dir"),
-		Verbosity:     viper.GetInt("global-verbose"),
+		Verbosity:     viper.GetInt("global-verbose") + 1,
 		LogFormat:     viper.GetString("global-log-format"),
 		LogToFile:     isMatchingCommand(cmds, logToFileOn) && viper.GetBool("global-log-to-file"),
 		LogListenAddr: viper.GetString("global-log-level-switcher-listen-addr"),
+		LogToStderr:   true,
 	})
 	launcher.SetupTracing("firearweave")
 	launcher.SetupAnalyticsMetrics(rootLog, viper.GetString("global-metrics-listen-addr"), viper.GetString("global-pprof-listen-addr"))

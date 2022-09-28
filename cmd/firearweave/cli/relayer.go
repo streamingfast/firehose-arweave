@@ -22,10 +22,13 @@ func init() {
 			return nil
 		},
 		FactoryFunc: func(runtime *launcher.Runtime) (launcher.App, error) {
-			sfDataDir := runtime.AbsDataDir
+			_, oneBlockStoreURL, _, err := getCommonStoresURLs(runtime.AbsDataDir)
+			if err != nil {
+				return nil, err
+			}
 			return relayerApp.New(&relayerApp.Config{
 				SourcesAddr:      viper.GetStringSlice("relayer-source"),
-				OneBlocksURL:     MustReplaceDataDir(sfDataDir, viper.GetString("common-one-blocks-store-url")),
+				OneBlocksURL:     oneBlockStoreURL,
 				GRPCListenAddr:   viper.GetString("relayer-grpc-listen-addr"),
 				MaxSourceLatency: viper.GetDuration("relayer-max-source-latency"),
 			}), nil

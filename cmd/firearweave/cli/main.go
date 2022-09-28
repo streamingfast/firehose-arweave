@@ -17,11 +17,8 @@ import (
 	"github.com/streamingfast/derr"
 	"github.com/streamingfast/dlauncher/flags"
 	"github.com/streamingfast/dlauncher/launcher"
-	"github.com/streamingfast/logging"
 	"go.uber.org/zap"
 )
-
-var rootLog, _ = logging.RootLogger("firearweave", "github.com/streamingfast/firehose-arweave/cmd/firearweave/cli")
 
 var RootCmd = &cobra.Command{Use: "firearweave", Short: "Arweave on StreamingFast"}
 var allFlags = make(map[string]bool) // used as global because of async access to cobra init functions

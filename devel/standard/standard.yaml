@@ -11,7 +11,6 @@ start:
     # debugging
     reader-node-debug-firehose-logs: false
     reader-node-log-to-zap: true
-    reader-node-merge-threshold-block-age: never
     # Once fully live with chain, those should be removed, they are used so that Firehose serves
     # blocks even if the chain is not live yet.
     relayer-max-source-latency: 999999999s

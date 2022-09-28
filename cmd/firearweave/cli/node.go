@@ -158,11 +158,10 @@ func nodeFactoryFunc(flagPrefix, kind string) func(*launcher.Runtime) (launcher.
 		}
 
 		blockStreamServer := blockstream.NewUnmanagedServer(blockstream.ServerOptionWithLogger(appLogger))
-		oneBlockStoreURL := mustReplaceDataDir(sfDataDir, viper.GetString("common-one-blocks-store-url"))
-		mergedBlockStoreURL := mustReplaceDataDir(sfDataDir, viper.GetString("common-merged-blocks-store-url"))
+
+		mergedBlocksStoreURL, oneBlockStoreURL, _, err := getCommonStoresURLs(runtime.AbsDataDir)
 		workingDir := mustReplaceDataDir(sfDataDir, viper.GetString("reader-node-working-dir"))
 		gprcListenAdrr := viper.GetString("reader-node-grpc-listen-addr")
-		mergeThresholdBlockAge := viper.GetString("reader-node-merge-threshold-block-age")
 		waitTimeForUploadOnShutdown := viper.GetDuration("reader-node-wait-upload-complete-on-shutdown")
 		oneBlockFileSuffix := viper.GetString("reader-node-one-block-suffix")
 		blocksChanCapacity := viper.GetInt("reader-node-blocks-chan-capacity")
@@ -170,8 +169,7 @@ func nodeFactoryFunc(flagPrefix, kind string) func(*launcher.Runtime) (launcher.
 		readerPlugin, err := getReaderLogPlugin(
 			blockStreamServer,
 			oneBlockStoreURL,
-			mergedBlockStoreURL,
-			mergeThresholdBlockAge,
+			mergedBlocksStoreURL,
 			workingDir,
 			batchStartBlockNum,
 			batchStopBlockNum,
@@ -196,7 +194,7 @@ func nodeFactoryFunc(flagPrefix, kind string) func(*launcher.Runtime) (launcher.
 			Operator:                   chainOperator,
 			MindreaderPlugin:           readerPlugin,
 			MetricsAndReadinessManager: metricsAndReadinessManager,
-			RegisterGRPCService: func(server *grpc.Server) error {
+			RegisterGRPCService: func(server grpc.ServiceRegistrar) error {
 				pbheadinfo.RegisterHeadInfoServer(server, blockStreamServer)
 				pbbstream.RegisterBlockStreamServer(server, blockStreamServer)
 
@@ -260,10 +258,12 @@ func buildNodeArguments(nodeDataDir, nodeRole string, endpoints []string, start,
 func buildMetricsAndReadinessManager(name string, maxLatency time.Duration) *nodeManager.MetricsAndReadinessManager {
 	headBlockTimeDrift := metrics.NewHeadBlockTimeDrift(name)
 	headBlockNumber := metrics.NewHeadBlockNumber(name)
+	appReadiness := metrics.NewAppReadiness(name)
 
 	metricsAndReadinessManager := nodeManager.NewMetricsAndReadinessManager(
 		headBlockTimeDrift,
 		headBlockNumber,
+		appReadiness,
 		maxLatency,
 	)
 	return metricsAndReadinessManager

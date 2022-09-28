@@ -21,6 +21,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/spf13/viper"
 	"github.com/streamingfast/cli"
 	"github.com/streamingfast/logging"
 	"go.uber.org/zap"
@@ -41,6 +42,41 @@ func mkdirStorePathIfLocal(storeURL string) (err error) {
 	if dirs := getDirsToMake(storeURL); len(dirs) > 0 {
 		err = makeDirs(dirs)
 	}
+	return
+}
+
+var commonStoresCreated bool
+var indexStoreCreated bool
+
+func mustGetCommonStoresURLs(dataDir string) (mergedBlocksStoreURL, oneBlocksStoreURL, forkedBlocksStoreURL string) {
+	var err error
+	mergedBlocksStoreURL, oneBlocksStoreURL, forkedBlocksStoreURL, err = getCommonStoresURLs(dataDir)
+	if err != nil {
+		panic(err)
+	}
+
+	return
+}
+
+func getCommonStoresURLs(dataDir string) (mergedBlocksStoreURL, oneBlocksStoreURL, forkedBlocksStoreURL string, err error) {
+	mergedBlocksStoreURL = MustReplaceDataDir(dataDir, viper.GetString("common-merged-blocks-store-url"))
+	oneBlocksStoreURL = MustReplaceDataDir(dataDir, viper.GetString("common-one-block-store-url"))
+	forkedBlocksStoreURL = MustReplaceDataDir(dataDir, viper.GetString("common-forked-blocks-store-url"))
+
+	if commonStoresCreated {
+		return
+	}
+
+	if err = mkdirStorePathIfLocal(forkedBlocksStoreURL); err != nil {
+		return
+	}
+	if err = mkdirStorePathIfLocal(oneBlocksStoreURL); err != nil {
+		return
+	}
+	if err = mkdirStorePathIfLocal(mergedBlocksStoreURL); err != nil {
+		return
+	}
+	commonStoresCreated = true
 	return
 }
 

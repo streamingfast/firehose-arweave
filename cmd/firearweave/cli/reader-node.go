@@ -15,8 +15,9 @@
 package cli
 
 import (
-	"github.com/streamingfast/firehose-arweave/codec"
 	"time"
+
+	"github.com/streamingfast/firehose-arweave/codec"
 
 	"github.com/spf13/cobra"
 	"github.com/streamingfast/bstream"
@@ -45,7 +46,6 @@ func registerReaderNodeFlags(cmd *cobra.Command) error {
 		hostname value is a good value to use.
 	`))
 	cmd.Flags().Duration("reader-node-wait-upload-complete-on-shutdown", 30*time.Second, "When the reader is shutting down, it will wait up to that amount of time for the archiver to finish uploading the blocks before leaving anyway")
-	cmd.Flags().String("reader-node-merge-threshold-block-age", "24h", "When processing blocks with a blocktime older than this threshold, they will be automatically merged")
 
 	return nil
 }
@@ -54,7 +54,6 @@ func getReaderLogPlugin(
 	blockStreamServer *blockstream.Server,
 	oneBlockStoreURL string,
 	mergedBlockStoreURL string,
-	mergeThresholdBlockAge string,
 	workingDir string,
 	batchStartBlockNum uint64,
 	batchStopBlockNum uint64,

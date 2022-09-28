@@ -45,19 +45,15 @@ func init() {
 			}
 			dmetering.SetDefaultMeter(metering)
 
-			var possibleIndexSizes []uint64
-			for _, size := range viper.GetIntSlice("firehose-block-index-sizes") {
-				if size < 0 {
-					return nil, fmt.Errorf("invalid negative size for firehose-block-index-sizes: %d", size)
-				}
-				possibleIndexSizes = append(possibleIndexSizes, uint64(size))
+			mergedBlocksStoreURL, oneBlockStoreURL, forkedBlocksStoreURL, err := getCommonStoresURLs(runtime.AbsDataDir)
+			if err != nil {
+				return nil, err
 			}
 
-			sfDataDir := runtime.AbsDataDir
 			return firehoseApp.New(appLogger, &firehoseApp.Config{
-				MergedBlocksStoreURL:    MustReplaceDataDir(sfDataDir, viper.GetString("common-merged-blocks-store-url")),
-				OneBlocksStoreURL:       MustReplaceDataDir(sfDataDir, viper.GetString("common-one-blocks-store-url")),
-				ForkedBlocksStoreURL:    MustReplaceDataDir(sfDataDir, viper.GetString("common-forked-blocks-store-url")),
+				MergedBlocksStoreURL:    mergedBlocksStoreURL,
+				OneBlocksStoreURL:       oneBlockStoreURL,
+				ForkedBlocksStoreURL:    forkedBlocksStoreURL,
 				BlockStreamAddr:         viper.GetString("common-live-source-addr"),
 				GRPCListenAddr:          viper.GetString("firehose-grpc-listen-addr"),
 				GRPCShutdownGracePeriod: time.Second,
