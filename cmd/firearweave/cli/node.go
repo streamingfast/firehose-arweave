@@ -26,22 +26,22 @@ import (
 var nodeLogger, nodeTracer = logging.PackageLogger("node", "github.com/streamingfast/firehose-arweave/node")
 var nodeArweaveLogger, nodeArweaveTracer = logging.PackageLogger("node.arweave", "github.com/streamingfast/firehose-arweave/node/dummy-chain", DefaultLevelInfo)
 
-var mindreaderLogger, mindreaderTracer = logging.PackageLogger("mindreader", "github.com/streamingfast/firehose-arweave/mindreader")
-var mindreaderArweaveLogger, mindreaderArweaveTracer = logging.PackageLogger("mindreader.arweave", "github.com/streamingfast/firehose-arweave/mindreader/dummy-chain", DefaultLevelInfo)
+var readerLogger, readerTracer = logging.PackageLogger("reader", "github.com/streamingfast/firehose-arweave/reader")
+var readerArweaveLogger, readerArweaveTracer = logging.PackageLogger("reader.arweave", "github.com/streamingfast/firehose-arweave/reader/dummy-chain", DefaultLevelInfo)
 
 func registerCommonNodeFlags(cmd *cobra.Command, flagPrefix string, managerAPIAddr string) {
 	cmd.Flags().String(flagPrefix+"path", "thegarii", FlagDescription(`
-		Process that will be invoked mindreader (a.k.a extractor) component, can be a full path or just the binary's name, in which case the binary is
+		Process that will be invoked reader component, can be a full path or just the binary's name, in which case the binary is
 		searched for paths listed by the PATH environment variable (following operating system rules around PATH handling).
 	`))
-	cmd.Flags().String(flagPrefix+"data-dir", "{data-dir}/{node-role}/data", "Directory for node data ({node-role} is either mindreader, peering or dev-miner)")
-	cmd.Flags().Bool(flagPrefix+"debug-deep-mind", false, "[DEV] Prints deep mind instrumentation logs to standard output, should be use for debugging purposes only")
+	cmd.Flags().String(flagPrefix+"data-dir", "{data-dir}/{node-role}/data", "Directory for node data ({node-role} is either reader, peering or dev-miner)")
+	cmd.Flags().Bool(flagPrefix+"debug-firehose-logs", false, "[DEV] Prints Firehose instrumentation logs to standard output, should be use for debugging purposes only")
 	cmd.Flags().Bool(flagPrefix+"log-to-zap", true, FlagDescription(`
 		When sets to 'true', all standard error output emitted by the invoked process defined via '%s'
 		is intercepted, split line by line and each line is then transformed and logged through the Firehose stack
 		logging system. The transformation extracts the level and remove the timestamps creating a 'sanitized' version
 		of the logs emitted by the blockchain's managed client process. If this is not desirable, disabled the flag
-		and all the invoked process standard error will be redirect to 'fireacme' standard's output.
+		and all the invoked process standard error will be redirect to 'firearweave' standard's output.
 	`, flagPrefix+"path"))
 	cmd.Flags().String(flagPrefix+"manager-api-addr", managerAPIAddr, "Arweave node manager API address")
 	cmd.Flags().Duration(flagPrefix+"readiness-max-latency", 10*time.Minute, "Determine the maximum head block latency at which the instance will be determined healthy. Some chains have more regular block production than others.")
@@ -49,8 +49,8 @@ func registerCommonNodeFlags(cmd *cobra.Command, flagPrefix string, managerAPIAd
 }
 
 func registerNode(kind string, extraFlagRegistration func(cmd *cobra.Command) error, managerAPIaddr string) {
-	if kind != "mindreader" {
-		panic(fmt.Errorf("invalid kind value, must be either 'mindreader', got %q", kind))
+	if kind != "reader" {
+		panic(fmt.Errorf("invalid kind value, must be either 'reader', got %q", kind))
 	}
 
 	app := fmt.Sprintf("%s-node", kind)
@@ -83,11 +83,11 @@ func nodeFactoryFunc(flagPrefix, kind string) func(*launcher.Runtime) (launcher.
 			appLogger = nodeLogger
 			appTracer = nodeTracer
 			supervisedProcessLogger = nodeArweaveLogger
-		case "mindreader":
-			appLogger = mindreaderLogger
-			appTracer = mindreaderTracer
+		case "reader":
+			appLogger = readerLogger
+			appTracer = readerTracer
 
-			supervisedProcessLogger = mindreaderArweaveLogger
+			supervisedProcessLogger = readerArweaveLogger
 		default:
 			panic(fmt.Errorf("unknown node kind %q", kind))
 		}
@@ -98,13 +98,13 @@ func nodeFactoryFunc(flagPrefix, kind string) func(*launcher.Runtime) (launcher.
 		nodeDataDir := replaceNodeRole(kind, mustReplaceDataDir(sfDataDir, viper.GetString(flagPrefix+"data-dir")))
 
 		readinessMaxLatency := viper.GetDuration(flagPrefix + "readiness-max-latency")
-		debugDeepMind := viper.GetBool(flagPrefix + "debug-deep-mind")
+		debugFirehoseLogs := viper.GetBool(flagPrefix + "debug-firehose-logs")
 		logToZap := viper.GetBool(flagPrefix + "log-to-zap")
 		shutdownDelay := viper.GetDuration("common-system-shutdown-signal-delay") // we reuse this global value
 		httpAddr := viper.GetString(flagPrefix + "manager-api-addr")
-		batchStartBlockNum := viper.GetUint64("mindreader-node-start-block-num")
-		batchStopBlockNum := viper.GetUint64("mindreader-node-stop-block-num")
-		endpoints := viper.GetStringSlice("mindreader-node-endpoints")
+		batchStartBlockNum := viper.GetUint64("reader-node-start-block-num")
+		batchStopBlockNum := viper.GetUint64("reader-node-stop-block-num")
+		endpoints := viper.GetStringSlice("reader-node-endpoints")
 
 		arguments := viper.GetString(flagPrefix + "arguments")
 		nodeArguments, err := buildNodeArguments(
@@ -125,7 +125,7 @@ func nodeFactoryFunc(flagPrefix, kind string) func(*launcher.Runtime) (launcher.
 			nodeArguments,
 			nodeDataDir,
 			metricsAndReadinessManager.UpdateHeadBlock,
-			debugDeepMind,
+			debugFirehoseLogs,
 			logToZap,
 			appLogger,
 			supervisedProcessLogger,
@@ -148,7 +148,7 @@ func nodeFactoryFunc(flagPrefix, kind string) func(*launcher.Runtime) (launcher.
 			return nil, fmt.Errorf("unable to create chain operator: %w", err)
 		}
 
-		if kind != "mindreader" {
+		if kind != "reader" {
 			return nodeManagerApp.New(&nodeManagerApp.Config{
 				HTTPAddr: httpAddr,
 			}, &nodeManagerApp.Modules{
@@ -160,14 +160,14 @@ func nodeFactoryFunc(flagPrefix, kind string) func(*launcher.Runtime) (launcher.
 		blockStreamServer := blockstream.NewUnmanagedServer(blockstream.ServerOptionWithLogger(appLogger))
 		oneBlockStoreURL := mustReplaceDataDir(sfDataDir, viper.GetString("common-one-blocks-store-url"))
 		mergedBlockStoreURL := mustReplaceDataDir(sfDataDir, viper.GetString("common-merged-blocks-store-url"))
-		workingDir := mustReplaceDataDir(sfDataDir, viper.GetString("mindreader-node-working-dir"))
-		gprcListenAdrr := viper.GetString("mindreader-node-grpc-listen-addr")
-		mergeThresholdBlockAge := viper.GetString("mindreader-node-merge-threshold-block-age")
-		waitTimeForUploadOnShutdown := viper.GetDuration("mindreader-node-wait-upload-complete-on-shutdown")
-		oneBlockFileSuffix := viper.GetString("mindreader-node-one-block-suffix")
-		blocksChanCapacity := viper.GetInt("mindreader-node-blocks-chan-capacity")
+		workingDir := mustReplaceDataDir(sfDataDir, viper.GetString("reader-node-working-dir"))
+		gprcListenAdrr := viper.GetString("reader-node-grpc-listen-addr")
+		mergeThresholdBlockAge := viper.GetString("reader-node-merge-threshold-block-age")
+		waitTimeForUploadOnShutdown := viper.GetDuration("reader-node-wait-upload-complete-on-shutdown")
+		oneBlockFileSuffix := viper.GetString("reader-node-one-block-suffix")
+		blocksChanCapacity := viper.GetInt("reader-node-blocks-chan-capacity")
 
-		mindreaderPlugin, err := getMindreaderLogPlugin(
+		readerPlugin, err := getReaderLogPlugin(
 			blockStreamServer,
 			oneBlockStoreURL,
 			mergedBlockStoreURL,
@@ -184,17 +184,17 @@ func nodeFactoryFunc(flagPrefix, kind string) func(*launcher.Runtime) (launcher.
 			appTracer,
 		)
 		if err != nil {
-			return nil, fmt.Errorf("new mindreader plugin: %w", err)
+			return nil, fmt.Errorf("new reader plugin: %w", err)
 		}
 
-		superviser.RegisterLogPlugin(mindreaderPlugin)
+		superviser.RegisterLogPlugin(readerPlugin)
 
 		return nodeManagerApp.New(&nodeManagerApp.Config{
 			HTTPAddr: httpAddr,
 			GRPCAddr: gprcListenAdrr,
 		}, &nodeManagerApp.Modules{
 			Operator:                   chainOperator,
-			MindreaderPlugin:           mindreaderPlugin,
+			MindreaderPlugin:           readerPlugin,
 			MetricsAndReadinessManager: metricsAndReadinessManager,
 			RegisterGRPCService: func(server *grpc.Server) error {
 				pbheadinfo.RegisterHeadInfoServer(server, blockStreamServer)
@@ -236,7 +236,7 @@ func buildNodeArguments(nodeDataDir, nodeRole string, endpoints []string, start,
 	}
 
 	typeRoles := nodeArgsByRole{
-		"mindreader": strings.Join(thegariiArgs, " "),
+		"reader": strings.Join(thegariiArgs, " "),
 	}
 
 	argsString, ok := typeRoles[nodeRole]

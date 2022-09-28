@@ -26,7 +26,7 @@ func init() {
 		Title:       "Block Firehose",
 		Description: "Provides on-demand filtered blocks, depends on mergd blocks and live source",
 		RegisterFlags: func(cmd *cobra.Command) error {
-			cmd.Flags().String("firehose-grpc-listen-addr", FirehoseGRPCServingAddr, "Address on which the firehose will listen, appending * to the end of the listen address will start the server over an insecure TLS connection. By default firehose will start in plain-text mode.")
+			cmd.Flags().String("firehose-grpc-listen-addr", FirehoseGRPCServingAddr, "Address on which the firehose will listen, appending * to the end of the listen address will start the server over an insecure TLS connection. By default Firehose will start in plain-text mode.")
 			return nil
 		},
 

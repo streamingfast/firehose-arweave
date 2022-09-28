@@ -1,7 +1,7 @@
 start:
   args:
   - merger
-  - mindreader-node
+  - reader-node
   flags:
-    mindreader-node-path: "thegarii"
-    mindreader-node-merge-threshold-block-age: never
+    reader-node-path: "thegarii"
+    reader-node-merge-threshold-block-age: never

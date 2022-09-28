@@ -39,12 +39,12 @@ func NewSuperviser(
 	arguments []string,
 	dataDir string,
 	headBlockUpdateFunc nodeManager.HeadBlockUpdater,
-	debugDeepMind bool,
+	debugFirehoseLogs bool,
 	logToZap bool,
 	appLogger *zap.Logger,
 	nodelogger *zap.Logger,
 ) *Superviser {
-	// Ensure process manager line buffer is large enough (50 MiB) for our Deep Mind instrumentation outputting lot's of text.
+	// Ensure process manager line buffer is large enough (50 MiB) for our Firehose instrumentation outputting lot's of text.
 	overseer.DEFAULT_LINE_BUFFER_SIZE = 50 * 1024 * 1024
 
 	supervisor := &Superviser{
@@ -59,9 +59,9 @@ func NewSuperviser(
 	supervisor.RegisterLogPlugin(logplugin.LogPluginFunc(supervisor.lastBlockSeenLogPlugin))
 
 	if logToZap {
-		supervisor.RegisterLogPlugin(newToZapLogPlugin(debugDeepMind, nodelogger))
+		supervisor.RegisterLogPlugin(newToZapLogPlugin(debugFirehoseLogs, nodelogger))
 	} else {
-		supervisor.RegisterLogPlugin(logplugin.NewToConsoleLogPlugin(debugDeepMind))
+		supervisor.RegisterLogPlugin(logplugin.NewToConsoleLogPlugin(debugFirehoseLogs))
 	}
 
 	appLogger.Info("created arweave superviser", zap.Object("superviser", supervisor))
@@ -115,12 +115,12 @@ func (s *Superviser) MarshalLogObject(enc zapcore.ObjectEncoder) error {
 }
 
 func (s *Superviser) lastBlockSeenLogPlugin(line string) {
-	// DMLOG BLOCK <HEIGHT> ...
-	if !strings.HasPrefix(line, "DMLOG BLOCK") {
+	// FIRE BLOCK <HEIGHT> ...
+	if !strings.HasPrefix(line, "FIRE BLOCK") {
 		return
 	}
 
-	blockNumStr := line[12:]
+	blockNumStr := line[11:]
 	nextSpace := strings.Index(blockNumStr, " ")
 	if nextSpace < 0 {
 		s.Logger.Error("unable to extract last block num, missing space", zap.String("line", line))
@@ -142,7 +142,7 @@ func (s *Superviser) lastBlockSeenLogPlugin(line string) {
 	// FIXME: Instrumentation needs to always have a way to easily decode height,
 	// hash and timestamp. Right now in Arweave, we have only the height.
 	//
-	// It's not important for now because only mindreaders are running and those
+	// It's not important for now because only readers are running and those
 	// updates are carried on directly by the console reader.
 	// s.headBlockUpdateFunc(s.lastBlockSeen,
 

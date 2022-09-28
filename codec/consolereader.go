@@ -61,7 +61,7 @@ func newParsingStats(block uint64) *parsingStats {
 }
 
 func (s *parsingStats) log() {
-	zlog.Info("mindreader block stats",
+	zlog.Info("reader block stats",
 		zap.Uint64("block_num", s.blockNum),
 		zap.Int64("duration", int64(time.Since(s.startAt))),
 		zap.Reflect("stats", s.data),
@@ -83,7 +83,7 @@ func (r *ConsoleReader) ReadBlock() (out *bstream.Block, err error) {
 }
 
 const (
-	LogPrefix = "DMLOG"
+	LogPrefix = "FIRE"
 	LogBlock  = "BLOCK"
 )
 
@@ -113,7 +113,7 @@ func (r *ConsoleReader) next() (out *bstream.Block, err error) {
 
 		default:
 			if tracer.Enabled() {
-				zlog.Debug("skipping unknown deep mind log line", zap.String("line", line))
+				zlog.Debug("skipping unknown Firehose log line", zap.String("line", line))
 			}
 			continue
 		}
@@ -147,7 +147,7 @@ func (r *ConsoleReader) buildScanner(reader io.Reader) *bufio.Scanner {
 }
 
 // Format:
-// DMLOG BLOCK <HEIGHT> <ENCODED_BLOCK>
+// FIRE BLOCK <HEIGHT> <ENCODED_BLOCK>
 func (r *ConsoleReader) readBlock(params []string) (*pbarweave.Block, error) {
 	if err := validateChunk(params, 2); err != nil {
 		return nil, fmt.Errorf("invalid log line length: %w", err)
@@ -177,7 +177,7 @@ func (r *ConsoleReader) readBlock(params []string) (*pbarweave.Block, error) {
 	}
 
 	if blockHeight != block.Height {
-		return nil, fmt.Errorf("block height %d from 'DMLOG <height> ...' does not match height %d from block's content", blockHeight, block.Height)
+		return nil, fmt.Errorf("block height %d from 'FIRE <height> ...' does not match height %d from block's content", blockHeight, block.Height)
 	}
 
 	if tracer.Enabled() {
