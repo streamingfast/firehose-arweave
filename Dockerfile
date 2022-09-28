@@ -1,17 +1,3 @@
-# syntax=docker/dockerfile:1.2
-
-# TODO: Move that to `thegarii` repo so we can pull it?
-# thegarii builder
-FROM rust:bullseye as thegarii-builder
-ENV CARGO_NET_GIT_FETCH_WITH_CLI=true
-RUN --mount=type=cache,target=/var/cache/apk \
-    --mount=type=cache,target=/home/rust/.cargo \
-    rustup component add rustfmt \
-    && git clone https://github.com/streamingfast/thegarii \
-    && cd thegarii \
-    && cargo build --release \
-    && cp target/release/thegarii /home/rust/
-
 FROM ubuntu:20.04
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
@@ -21,12 +7,17 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
     rm -rf /var/cache/apt /var/lib/apt/lists/*
 
 RUN rm /etc/localtime && ln -snf /usr/share/zoneinfo/America/Montreal /etc/localtime && dpkg-reconfigure -f noninteractive tzdata
+RUN mkdir -p /app/ && curl -Lo /app/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/v0.4.12/grpc_health_probe-linux-amd64 && chmod +x /app/grpc_health_probe
 
 ADD /firearweave /app/firearweave
-COPY --from=thegarii-builder /home/rust/thegarii /app/thegarii
 
-# TODO: Add back later
-# COPY tools/sfeth/motd_generic /etc/
-# COPY tools/sfeth/99-sfeth-generic.sh /etc/profile.d/
+COPY tools/firearweave/motd_generic /etc/motd
+COPY tools/firearweave/99-firehose.sh /etc/profile.d/
+
+# On SSH connection, /root/.bashrc is invoked which invokes '/root/.bash_aliases' if existing,
+# so we hijack the file to "execute" our specialized bash script
+RUN echo ". /etc/profile.d/99-firehose.sh" > /root/.bash_aliases
+
+ENV PATH "$PATH:/app"
 
 ENTRYPOINT ["/app/firearweave"]
