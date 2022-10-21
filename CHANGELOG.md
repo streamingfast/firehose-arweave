@@ -4,9 +4,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html). See [MAINTAINERS.md](./MAINTAINERS.md)
 for instructions to keep up to date.
 
+## v1.1.1
+
+* Added 'sf.firehose.v2.Fetch' endpoint
+* Added `tools firehose-single-block-client` command to use this endpoint
+
 ## v1.1.0
 
 ### Changes
+* firehose protocol bump from v1 to v2 (see upgrade procedure below)
+* Renamed 'mindreader' to 'reader' in all commands and flags
+* Reading blocks from merged blocks files is now more straightforward (blocks are assumed irreversible)
 * Bumped all firehose dependencies (from old versions)
 * Logs are now more verbose by default output to STDERR
 * Removed reader-node-merge-threshold-block-age (no more merging directly in the reader node, only the merger does it now)

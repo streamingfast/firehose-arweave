@@ -78,7 +78,7 @@ func blockPrinter(block *bstream.Block) {
 	protocolBlock := block.ToProtocol().(*pbarweave.Block)
 	fmt.Printf("Block %s, Prev: %s @ %s\n",
 		block.AsRef(),
-		block.PreviousRef(),
+		block.PreviousId,
 		protocolBlock.Time(),
 	)
 }

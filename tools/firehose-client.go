@@ -11,6 +11,9 @@ import (
 func init() {
 	firehoseClientCmd := sftools.GetFirehoseClientCmd(zlog, tracer, transformsSetter)
 	Cmd.AddCommand(firehoseClientCmd)
+
+	firehoseSingleBlockClientCmd := sftools.GetFirehoseSingleBlockClientCmd(zlog, tracer)
+	Cmd.AddCommand(firehoseSingleBlockClientCmd)
 }
 
 // no transforms on arweave yet
