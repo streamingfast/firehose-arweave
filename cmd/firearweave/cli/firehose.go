@@ -45,7 +45,7 @@ func init() {
 			}
 			dmetering.SetDefaultMeter(metering)
 
-			mergedBlocksStoreURL, oneBlockStoreURL, forkedBlocksStoreURL, err := getCommonStoresURLs(runtime.AbsDataDir)
+			mergedBlocksStoreURL, oneBlockStoreURL, err := getCommonStoresURLs(runtime.AbsDataDir)
 			if err != nil {
 				return nil, err
 			}
@@ -53,7 +53,6 @@ func init() {
 			return firehoseApp.New(appLogger, &firehoseApp.Config{
 				MergedBlocksStoreURL:    mergedBlocksStoreURL,
 				OneBlocksStoreURL:       oneBlockStoreURL,
-				ForkedBlocksStoreURL:    forkedBlocksStoreURL,
 				BlockStreamAddr:         viper.GetString("common-live-source-addr"),
 				GRPCListenAddr:          viper.GetString("firehose-grpc-listen-addr"),
 				GRPCShutdownGracePeriod: time.Second,

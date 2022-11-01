@@ -22,7 +22,7 @@ func init() {
 			return nil
 		},
 		FactoryFunc: func(runtime *launcher.Runtime) (launcher.App, error) {
-			_, oneBlockStoreURL, _, err := getCommonStoresURLs(runtime.AbsDataDir)
+			_, oneBlockStoreURL, err := getCommonStoresURLs(runtime.AbsDataDir)
 			if err != nil {
 				return nil, err
 			}

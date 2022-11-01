@@ -24,7 +24,6 @@ func init() {
 	launcher.RegisterCommonFlags = func(logger *zap.Logger, cmd *cobra.Command) error {
 		//Common stores configuration flags
 		cmd.Flags().String("common-merged-blocks-store-url", MergedBlocksStoreURL, "[COMMON] Store URL (with prefix) where to read/write. Used by: reader, merger, relayer and firehose")
-		cmd.Flags().String("common-forked-blocks-store-url", ForkedBlockStoreURL, "[COMMON] Store URL (with prefix) to read/write forked block files. Used by: merger, firehose")
 		cmd.Flags().String("common-one-block-store-url", OneBlockStoreURL, "[COMMON] Store URL (with prefix) to read/write one-block files. Used by: reader, merger")
 		cmd.Flags().String("common-live-source-addr", RelayerServingAddr, "[COMMON] gRPC endpoint to get real-time blocks. Used by: firehose")
 

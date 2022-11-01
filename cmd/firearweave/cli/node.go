@@ -118,7 +118,7 @@ func nodeFactoryFunc(flagPrefix, kind string) func(*launcher.Runtime) (launcher.
 		if err != nil {
 			return nil, fmt.Errorf("cannot build node bootstrap arguments")
 		}
-		metricsAndReadinessManager := buildMetricsAndReadinessManager(flagPrefix, readinessMaxLatency)
+		metricsAndReadinessManager := buildMetricsAndReadinessManager(strings.TrimSuffix(flagPrefix, "-"), readinessMaxLatency)
 
 		superviser := nodemanager.NewSuperviser(
 			nodePath,
@@ -159,7 +159,7 @@ func nodeFactoryFunc(flagPrefix, kind string) func(*launcher.Runtime) (launcher.
 
 		blockStreamServer := blockstream.NewUnmanagedServer(blockstream.ServerOptionWithLogger(appLogger))
 
-		mergedBlocksStoreURL, oneBlockStoreURL, _, err := getCommonStoresURLs(runtime.AbsDataDir)
+		mergedBlocksStoreURL, oneBlockStoreURL, err := getCommonStoresURLs(runtime.AbsDataDir)
 		workingDir := mustReplaceDataDir(sfDataDir, viper.GetString("reader-node-working-dir"))
 		gprcListenAdrr := viper.GetString("reader-node-grpc-listen-addr")
 		waitTimeForUploadOnShutdown := viper.GetDuration("reader-node-wait-upload-complete-on-shutdown")

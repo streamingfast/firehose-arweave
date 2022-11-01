@@ -48,9 +48,9 @@ func mkdirStorePathIfLocal(storeURL string) (err error) {
 var commonStoresCreated bool
 var indexStoreCreated bool
 
-func mustGetCommonStoresURLs(dataDir string) (mergedBlocksStoreURL, oneBlocksStoreURL, forkedBlocksStoreURL string) {
+func mustGetCommonStoresURLs(dataDir string) (mergedBlocksStoreURL, oneBlocksStoreURL string) {
 	var err error
-	mergedBlocksStoreURL, oneBlocksStoreURL, forkedBlocksStoreURL, err = getCommonStoresURLs(dataDir)
+	mergedBlocksStoreURL, oneBlocksStoreURL, err = getCommonStoresURLs(dataDir)
 	if err != nil {
 		panic(err)
 	}
@@ -58,18 +58,14 @@ func mustGetCommonStoresURLs(dataDir string) (mergedBlocksStoreURL, oneBlocksSto
 	return
 }
 
-func getCommonStoresURLs(dataDir string) (mergedBlocksStoreURL, oneBlocksStoreURL, forkedBlocksStoreURL string, err error) {
+func getCommonStoresURLs(dataDir string) (mergedBlocksStoreURL, oneBlocksStoreURL string, err error) {
 	mergedBlocksStoreURL = MustReplaceDataDir(dataDir, viper.GetString("common-merged-blocks-store-url"))
 	oneBlocksStoreURL = MustReplaceDataDir(dataDir, viper.GetString("common-one-block-store-url"))
-	forkedBlocksStoreURL = MustReplaceDataDir(dataDir, viper.GetString("common-forked-blocks-store-url"))
 
 	if commonStoresCreated {
 		return
 	}
 
-	if err = mkdirStorePathIfLocal(forkedBlocksStoreURL); err != nil {
-		return
-	}
 	if err = mkdirStorePathIfLocal(oneBlocksStoreURL); err != nil {
 		return
 	}
