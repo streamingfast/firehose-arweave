@@ -5,6 +5,13 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html). S
 for instructions to keep up to date.
 
 ## UNRELEASED
+
+### Added
+
+* Added support for "requester pays" buckets on Google Storage in url, ex: `gs://my-bucket/path?project=my-project-id`
+
+### Removed
+
 * Removed 'forked' blocks references in the logs
 * Removed flags: --common-forked-blocks-store-url and --merger-prune-forked-blocks-after
 
