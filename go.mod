@@ -8,7 +8,7 @@ require (
 	github.com/golang/protobuf v1.5.2
 	github.com/spf13/cobra v1.4.0
 	github.com/spf13/viper v1.8.1
-	github.com/streamingfast/bstream v0.0.2-0.20221117104246-5660c4ba5e8c
+	github.com/streamingfast/bstream v0.0.2-0.20230228213106-2b6a3160e01e
 	github.com/streamingfast/cli v0.0.4-0.20220630165922-bc58c6666fc8
 	github.com/streamingfast/dauth v0.0.0-20221027185237-b209f25fa3ff
 	github.com/streamingfast/dbin v0.9.1-0.20220513054835-1abebbb944ad // indirect

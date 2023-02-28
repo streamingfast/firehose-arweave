@@ -242,7 +242,6 @@ github.com/armon/go-metrics v0.0.0-20180917152333-f0300d1749da/go.mod h1:Q73ZrmV
 github.com/armon/go-radix v0.0.0-20180808171621-7fddfc383310/go.mod h1:ufUuZ+zHj4x4TnLV4JWEpy2hxWSpsRywHrMgIH9cCH8=
 github.com/aws/aws-sdk-go v1.22.1/go.mod h1:KmX6BPdI08NWTb3/sm4ZGu5ShLoqVDhKgpiN924inxo=
 github.com/aws/aws-sdk-go v1.25.43/go.mod h1:KmX6BPdI08NWTb3/sm4ZGu5ShLoqVDhKgpiN924inxo=
-github.com/aws/aws-sdk-go v1.37.0 h1:GzFnhOIsrGyQ69s7VgqtrG2BG8v7X7vwB3Xpbd/DBBk=
 github.com/aws/aws-sdk-go v1.37.0/go.mod h1:hcU610XS61/+aQV88ixoOzUoG7v3b31pl2zKMmprdro=
 github.com/aws/aws-sdk-go v1.44.187 h1:D5CsRomPnlwDHJCanL2mtaLIcbhjiWxNh5j8zvaWdJA=
 github.com/aws/aws-sdk-go v1.44.187/go.mod h1:aVsgQcEevwlmQ7qHE9I3h+dtQgpqhFB+i8Phjh7fkwI=
@@ -754,8 +753,8 @@ github.com/streamingfast/bstream v0.0.2-0.20220419143921-1612cfa6b659/go.mod h1:
 github.com/streamingfast/bstream v0.0.2-0.20220909121429-4647fd1522c9/go.mod h1:Njkx972HcZiz0djWBylxqO/eq686eDGr+egQ1lePj3Q=
 github.com/streamingfast/bstream v0.0.2-0.20221017131819-2a7e38be1047/go.mod h1:Njkx972HcZiz0djWBylxqO/eq686eDGr+egQ1lePj3Q=
 github.com/streamingfast/bstream v0.0.2-0.20221115101451-752234eb5e18/go.mod h1:Njkx972HcZiz0djWBylxqO/eq686eDGr+egQ1lePj3Q=
-github.com/streamingfast/bstream v0.0.2-0.20221117104246-5660c4ba5e8c h1:w4g9NuXJinQXA9V2B/lRpVuMYXr9zqiZJasBJjBKJcY=
-github.com/streamingfast/bstream v0.0.2-0.20221117104246-5660c4ba5e8c/go.mod h1:Njkx972HcZiz0djWBylxqO/eq686eDGr+egQ1lePj3Q=
+github.com/streamingfast/bstream v0.0.2-0.20230228213106-2b6a3160e01e h1:yf4LBv8l+abF7qggb6H4JIfXu6imLkbtXwIK/YOBj4U=
+github.com/streamingfast/bstream v0.0.2-0.20230228213106-2b6a3160e01e/go.mod h1:Njkx972HcZiz0djWBylxqO/eq686eDGr+egQ1lePj3Q=
 github.com/streamingfast/cli v0.0.4-0.20220630165922-bc58c6666fc8 h1:1W2VZY4jRTh7GJ6+PnydanRcr3Hj45SKDnb+kBQQwlc=
 github.com/streamingfast/cli v0.0.4-0.20220630165922-bc58c6666fc8/go.mod h1:Lmirl0ABgXzidX33syiUG6lX64mJMK5pDNTBFuz8xZI=
 github.com/streamingfast/dauth v0.0.0-20210812020920-1c83ba29add1/go.mod h1:FIYpVqt+ICVuNBoOH3ZIicIctpVoCq3393+RpfXsPEM=
@@ -786,8 +785,6 @@ github.com/streamingfast/dstore v0.1.1-0.20220304164644-696f9c5fc231/go.mod h1:a
 github.com/streamingfast/dstore v0.1.1-0.20220607202639-35118aeaf648/go.mod h1:SHSEIPowGeE1TfNNmGeAUUnlO3dwevmX5kFOSazU60M=
 github.com/streamingfast/dstore v0.1.1-0.20220830184623-b0f0cc804743/go.mod h1:SHSEIPowGeE1TfNNmGeAUUnlO3dwevmX5kFOSazU60M=
 github.com/streamingfast/dstore v0.1.1-0.20221021155138-4baa2d406146/go.mod h1:SHSEIPowGeE1TfNNmGeAUUnlO3dwevmX5kFOSazU60M=
-github.com/streamingfast/dstore v0.1.1-0.20221122154654-67d4f398642a h1:ZFH7AwaSZzizk+ElEDj/+H20W/cMNpRa5r1Z7MIOqs0=
-github.com/streamingfast/dstore v0.1.1-0.20221122154654-67d4f398642a/go.mod h1:FcQTVifHTEbQ63mptCdq8nAfTTiORmOhyDmKIyQMh+k=
 github.com/streamingfast/dstore v0.1.1-0.20230202164314-93694544e2ca h1:JHtmExZ83sEsQEeR5GfVEPt1ys3WHsMsIDDxQY5Aqm0=
 github.com/streamingfast/dstore v0.1.1-0.20230202164314-93694544e2ca/go.mod h1:sKU3A7FzMhaEGdGpaZjjpi59iGRPLF4bp/WbSASYJyI=
 github.com/streamingfast/dtracing v0.0.0-20210811175635-d55665d3622a/go.mod h1:bqiYZaX6L/MoXNfFQeAdau6g9HLA3yKHkX8KzStt58Q=
@@ -1059,7 +1056,6 @@ golang.org/x/net v0.0.0-20220617184016-355a448f1bc9/go.mod h1:XRhObCWvk6IyKnWLug
 golang.org/x/net v0.0.0-20220624214902-1bab6f366d9e/go.mod h1:XRhObCWvk6IyKnWLug+ECip1KBveYUHfp+8e9klMJ9c=
 golang.org/x/net v0.0.0-20220722155237-a158d28d115b/go.mod h1:XRhObCWvk6IyKnWLug+ECip1KBveYUHfp+8e9klMJ9c=
 golang.org/x/net v0.0.0-20220909164309-bea034e7d591/go.mod h1:YDH+HFinaLZZlnHAfSS6ZXJJ9M9t4Dl22yv3iI2vPwk=
-golang.org/x/net v0.0.0-20221012135044-0b7e1fb9d458 h1:MgJ6t2zo8v0tbmLCueaCbF1RM+TtB0rs3Lv8DGtOIpY=
 golang.org/x/net v0.0.0-20221012135044-0b7e1fb9d458/go.mod h1:YDH+HFinaLZZlnHAfSS6ZXJJ9M9t4Dl22yv3iI2vPwk=
 golang.org/x/net v0.1.0 h1:hZ/3BUoy5aId7sCpA/Tc5lt8DkFgdVS2onTpJsZ/fl0=
 golang.org/x/net v0.1.0/go.mod h1:Cx3nUiGt4eDBEyega/BKRp+/AlGL8hYe7U9odMt2Cco=
@@ -1193,12 +1189,10 @@ golang.org/x/sys v0.0.0-20220610221304-9f5ed59c137d/go.mod h1:oPkhp1MJrh7nUepCBc
 golang.org/x/sys v0.0.0-20220615213510-4f61da869c0c/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/sys v0.0.0-20220624220833-87e55d714810/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/sys v0.0.0-20220722155257-8c9f86f7a55f/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
-golang.org/x/sys v0.0.0-20220728004956-3c1f35247d10 h1:WIoqL4EROvwiPdUtaip4VcDdpZ4kha7wBWZrbVKCIZg=
 golang.org/x/sys v0.0.0-20220728004956-3c1f35247d10/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/sys v0.1.0 h1:kunALQeHf1/185U1i0GOB/fy1IPRDDpuoOOqRReG57U=
 golang.org/x/sys v0.1.0/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/term v0.0.0-20201126162022-7de9c90e9dd1/go.mod h1:bj7SfCRtBDWHUb9snDiAeCFNEtKQo2Wmx5Cou7ajbmo=
-golang.org/x/term v0.0.0-20210927222741-03fcf44c2211 h1:JGgROgKl9N8DuW20oFS5gxc+lE67/N3FcwmBPMe7ArY=
 golang.org/x/term v0.0.0-20210927222741-03fcf44c2211/go.mod h1:jbD1KX2456YbFQfuXm/mYQcufACuNUgVhRMnK/tPxf8=
 golang.org/x/term v0.1.0 h1:g6Z6vPFA9dYBAF7DWcH6sCcOntplXsDKcliusYijMlw=
 golang.org/x/term v0.1.0/go.mod h1:jbD1KX2456YbFQfuXm/mYQcufACuNUgVhRMnK/tPxf8=
@@ -1210,7 +1204,6 @@ golang.org/x/text v0.3.3/go.mod h1:5Zoc/QRtKVWzQhOtBMvqHzDpF6irO9z98xDceosuGiQ=
 golang.org/x/text v0.3.4/go.mod h1:5Zoc/QRtKVWzQhOtBMvqHzDpF6irO9z98xDceosuGiQ=
 golang.org/x/text v0.3.5/go.mod h1:5Zoc/QRtKVWzQhOtBMvqHzDpF6irO9z98xDceosuGiQ=
 golang.org/x/text v0.3.6/go.mod h1:5Zoc/QRtKVWzQhOtBMvqHzDpF6irO9z98xDceosuGiQ=
-golang.org/x/text v0.3.7 h1:olpwvP2KacW1ZWvsR7uQhoyTYvKAupfQrRGBFM352Gk=
 golang.org/x/text v0.3.7/go.mod h1:u+2+/6zg+i71rQMx5EYifcz6MCKuco9NR6JIITiCfzQ=
 golang.org/x/text v0.4.0 h1:BrVqGRd7+k1DiOgtnFvAkoQEWQvBc25ouMJM6429SFg=
 golang.org/x/text v0.4.0/go.mod h1:mrYo+phRRbMaCq/xk9113O4dZlRixOauAjOtrjsXDZ8=
